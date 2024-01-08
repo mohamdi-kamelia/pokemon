@@ -7,8 +7,7 @@ class Menu :
         self.height = height
         self.menu = ["Lancer une partie " , "Ajouter un Pokémon" , "Accéder au pokédex" , "Quitter le jeu "]
         self.arriére_plan = arriére_plan
-        self.arriére_plan = pygame.image.load("pokemon-go-suivi-exploration-tutoriel.jpg")
+        self.arriére_plan = pygame.image.load("pok (1).jpg")
     def afficher_menu(self , fenetre):
         fenetre.blit(self.arriére_plan , (0 ,0))
-        
-
+    
