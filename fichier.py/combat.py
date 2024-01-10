@@ -4,4 +4,5 @@ class Combat :
         self.joueur  = joueur
         self.adversaie = adversaie
     def enlève_points(joueur , advairsaire):
+        pass
         
