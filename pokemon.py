@@ -69,7 +69,6 @@ class Pokemon(pygame.sprite.Sprite):
             elif stat['stat']['name'] == 'speed':
                 self.speed = stat['base_stat']
 
-        
 
         self.type = []
         for pokemon_type in self.json['types']:
