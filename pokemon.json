@@ -34,5 +34,12 @@
         "niveau": 5,
         "puissance_attaque": 27,
         "defense": 16
+    },
+    {
+        "nom": "Bulbasaur",
+        "points_de_vie": 95,
+        "niveau": 5,
+        "puissance_attaque": 22,
+        "defense": 18
     }
 ]

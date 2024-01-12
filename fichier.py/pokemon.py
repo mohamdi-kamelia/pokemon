@@ -1,6 +1,5 @@
 import pygame
 from pygame.locals import QUIT
-from pygame import Rect
 import requests 
 import io 
 from urllib.request import urlopen 
@@ -35,7 +34,6 @@ TYPES = [Type("Normal"), Type("Feu"), Type("Eau"), Type("Terre"), Type("Electric
 class Pokemon(pygame.sprite.Sprite):
     def __init__(self, nom, points_de_vie, niveau, puissance_attaque, defense, types, x, y):
         pygame.sprite.Sprite.__init__(self)
-        
         self.nom = nom
         self.points_de_vie = points_de_vie
         self.puissance_attaque = puissance_attaque
@@ -104,6 +102,26 @@ class Pokemon(pygame.sprite.Sprite):
 
     def get_rect(self):
         return pygame.Rect(self.x, self.y, self.image.get_width(), self.image.get_height())
+    
+    def attaquer(self, adversaire):
+        # Logique pour gérer l'attaque
+        degats = self.calculer_degats(adversaire)
+        adversaire.retirrer_points_de_vie(degats)
+
+    def calculer_degats(self, adversaire):
+        # Logique pour calculer les dégâts en fonction du type
+        degats = self.puissance_attaque - adversaire.defense
+        return degats if degats > 0 eles 0
+
+    def retirer_points_de_vie(self, degats):
+      # Logique pour retirer des points de vie
+        self.points_de_vie -= degats
+        if self.points_de_vie < 0:
+            self.points_de_vie = 0  
+
+
+          
+
 
 
 
