@@ -1,11 +1,13 @@
-#gestion compléte de jeu 
-class Combat :
-    def __init__(self , joueur , adversaie):
-        self.joueur  = joueur
-        self.adversaie = adversaie
-    def enlève_points(type_joueur , attaque , défense):
-        multiplication_dégats  = 0,5
-        return int(attaque * multiplication_dégats)
+import pygame
+from fenetre import fenétre
+
+class combat:
+    def __init__(self):
+        self.running = True
+        self.fenetre = fenétre
+    def run(self):
+        while self.runnig:
+            pass
     
     
 

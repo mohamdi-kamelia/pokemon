@@ -105,7 +105,7 @@ class MenuPage:
 if __name__ == "__main__":
     # Initialisez les instances de la classe Pokemon avec les arguments nécessaires
     niveau = 30
-    x_bulbasaur, y_bulbasaur = 50, 50:
+    x_bulbasaur, y_bulbasaur = 50, 50
     x_charmander, y_charmander = 200, 50
     x_squirtle, y_squirtle = 350, 50
     x_pikachu, y_pikachu = 500, 50
