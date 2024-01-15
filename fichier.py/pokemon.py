@@ -197,8 +197,8 @@ while game_status != 'quit':
 
 
                 #check which pokemon was clicked on 
-                for i in range(len(pokemon)):
-                    if pokemon[i].get_rect().collidepoint(mouse_click):
+                for i in range(len(pokemons)):
+                    if pokemons[i].get_rect().collidepoint(mouse_click):
 
                         # assing the player's and rival's pokemon 
                         player_pokemon = pokemon[i]
