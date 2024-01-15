@@ -20,7 +20,7 @@ grey = (200, 200, 200)
 green = (0, 200, 0)
 red = (200, 0, 0)
 white = (255, 255, 255)
-K = (129, 178, 154)
+green = (129, 178, 154)
 
 base_url = 'https://pokeapi.co/api/v2'
 
@@ -111,7 +111,7 @@ class Pokemon(pygame.sprite.Sprite):
     def calculer_degats(self, adversaire):
         # Logique pour calculer les dégâts en fonction du type
         degats = self.puissance_attaque - adversaire.defense
-        return degats if degats > 0 eles 0
+        return degats if degats > 0 else 0
 
     def retirer_points_de_vie(self, degats):
       # Logique pour retirer des points de vie
@@ -148,6 +148,7 @@ pokemons = [bulbasaur, charmander, squirtle, pikachu, sandshrew, eevee]
 
 player_pokemon = None
 rival_pokemon = None 
+selected_pokemon = None 
 
 # game loop 
 game_status = 'select pokemon'
@@ -156,10 +157,16 @@ while game_status != 'quit':
     for event in pygame.event.get():
         if event.type == QUIT:
             game_status = 'quit'
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            # Vérifiez si un Pokémon a été cliqué
+            mouse_cursor = pygame.mouse.get_pos()
+            for pokemon in pokemons:
+                if pokemon.get_rect().collidepoint(mouse_cursor):
+                    selected_pokemon = pokemon    
 
     # Écran de sélection des Pokémon
     if game_status == 'select pokemon':
-        game.fill(K)
+        game.fill(green)
 
         # Dessinez les Pokémon de départ
         bulbasaur.draw()
@@ -169,6 +176,20 @@ while game_status != 'quit':
         eevee.draw()
         sandshrew.draw()
 
+        # Dessiner une boîte autour du Pokémon pointé par la souris
+        if selected_pokemon:
+            pygame.draw.rect(game, gold, selected_pokemon.get_rect(), 2)
+
+        pygame.display.update()
+
+        # Si un Pokémon est sélectionné, attribuez-le à player_pokemon et passez à la suite du jeu
+        if selected_pokemon:
+            player_pokemon = selected_pokemon
+            game_status = 'next_phase'
+            selected_pokemon = None  # Réinitialisez la variable pour éviter de re-sélectionner le même Pokémon
+
+pygame.quit()             
+"""
         #Dessiner une boîte autour du Pokémon pointé par la souris
         mouse_cursor = pygame.mouse.get_pos()
         for pokemon in pokemons:
@@ -176,8 +197,9 @@ while game_status != 'quit':
                 pygame.draw.rect(game, black, pokemon.get_rect(), 2)
 
         pygame.display.update()
-            
-pygame.quit()            
+"""        
+        
+           
 
 """
         self.type = []
