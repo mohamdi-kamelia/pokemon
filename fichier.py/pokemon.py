@@ -1,9 +1,10 @@
 import pygame
 from pygame.locals import QUIT
-from pygame import Rect
+from pygame import MOUSEBUTTONDOWN, Rect
 import requests 
 import io 
-from urllib.request import urlopen 
+from urllib.request import urlopen
+import random 
 
 pygame.init()
 
@@ -31,6 +32,17 @@ class Type:
         self.type_name = type_name
 
 TYPES = [Type("Normal"), Type("Feu"), Type("Eau"), Type("Terre"), Type("Electric")]        
+
+class Move():
+    def __init__(self, url):
+        
+        # call the moves API endpoint
+        req = requests.get(url)
+        self.json = req.json()
+
+        self.name = self.json['name']
+        self.power = self.json['power']
+        self.type = self.json['type']['name']
 
 class Pokemon(pygame.sprite.Sprite):
     def __init__(self, nom, points_de_vie, niveau, puissance_attaque, defense, types, x, y):
@@ -71,15 +83,16 @@ class Pokemon(pygame.sprite.Sprite):
 
 
         self.type = []
+        #for i in range(len(self.json['types'])):
         for pokemon_type in self.json['types']:
             type_name = pokemon_type['type']['name']
             self.type.append(type_name)
 
-            # définir la largeur du sprite
-            self.size = 150
+        # définir la largeur du sprite
+        self.size = 150
 
-            #définir le sprite comme le sprite orienté vers l'avant
-            self.set_sprite('front_default') 
+        #définir le sprite comme le sprite orienté vers l'avant
+        self.set_sprite('front_default') 
 
     def set_sprite(self, side):
 
@@ -96,6 +109,40 @@ class Pokemon(pygame.sprite.Sprite):
         new_height =self.image.get_height() * scale
         self.image = pygame.transform.scale(self.image, (new_width, new_height))
 
+    def set_moves(self):
+        self.moves = []
+
+        # go through all moves from the api
+        for i in range(len(self.json['moves'])):
+            # get the move from different game versions 
+            versions = self. json['moves']['i']['version_group_details']    
+            for j in range(len(versions)):
+                version = versions[j]
+
+                # only get moves from red-blue version 
+                if version['version_group']['name'] != 'red_blue':
+                    continue
+
+                #only get moves that can be learned from leveling up (ie. exclude TM moves)
+                learn_method = version['move_learn_method']['name']
+                if learn_method != 'level_up':
+                    continue
+
+            # add move if pokemon level is high enough 
+            level_learned = version['level_learned_at']
+            if self.level >= level_learned:
+                move = Move(self.json['moves'][i]['move']['url'])
+
+                # only include attaack moves 
+                if move.power is not None:
+                    self.moves.append(move)
+
+        # select up to 4 random moves 
+        if len(self.moves) > 4:
+            self.moves = random.sample(self.moves, 4)
+
+
+
     def draw(self, alpha=255):
         sprite = self.image.copy()
         transparency = (255, 255, 255, alpha)
@@ -105,9 +152,6 @@ class Pokemon(pygame.sprite.Sprite):
     def get_rect(self):
         return pygame.Rect(self.x, self.y, self.image.get_width(), self.image.get_height())
 
-
-
-
 niveau = 30
 # Définir les positions x et y pour l'affichage des Pokémon
 x_bulbasaur, y_bulbasaur = 50, 50
@@ -116,7 +160,6 @@ x_squirtle, y_squirtle = 350, 50
 x_pikachu, y_pikachu = 500, 50
 x_sandshrew, y_sandshrew = 50, 250
 x_eevee, y_eevee = 200, 250
-
 # Créez les instances de la classe Pokemon avec les arguments nécessaires
 bulbasaur = Pokemon('Bulbasaur', 100, niveau, 25, 15, ['Type1', 'Type2'], x_bulbasaur, y_bulbasaur)
 charmander = Pokemon('Charmander', 90, niveau, 25, 18, ['Type1', 'Type2'], x_charmander, y_charmander)
@@ -125,6 +168,9 @@ pikachu = Pokemon('Pikachu', 85, niveau, 30, 15, ['Type1'], x_pikachu, y_pikachu
 sandshrew = Pokemon('Sandshrew', 95, niveau, 20, 25, ['Type1'], x_sandshrew, y_sandshrew)
 eevee = Pokemon('Eevee', 80, niveau, 20, 20, ['Type1'], x_eevee, y_eevee)
 pokemons = [bulbasaur, charmander, squirtle, pikachu, sandshrew, eevee]
+
+
+
 
 #Les Pokémon sélectionnés par les joueurs et les rivaux 
 
@@ -138,6 +184,38 @@ while game_status != 'quit':
     for event in pygame.event.get():
         if event.type == QUIT:
             game_status = 'quit'
+
+        # detect mouse click
+        if event.type == MOUSEBUTTONDOWN:
+            # coordinates of the mouse click
+            mouse_click = event.pos
+
+            # for selection a pokemon
+            if game_status == 'select pokemon':
+
+
+
+
+                #check which pokemon was clicked on 
+                for i in range(len(pokemon)):
+                    if pokemon[i].get_rect().collidepoint(mouse_click):
+
+                        # assing the player's and rival's pokemon 
+                        player_pokemon = pokemon[i]
+                        rival_pokemon = pokemon[(i + 1) % len(pokemons)]
+
+                        # lower the rival pokemon's level to make the battle easier
+                        rival_pokemon.niveau = int(rival_pokemon.niveau * .75)
+
+                        # set the coordinates of the hp bars 
+                        player_pokemon.hp_x = 275
+                        player_pokemon.hp_y = 250
+                        rival_pokemon.hp_x = 50
+                        rival_pokemon.hp_y = 50
+
+                        game_status = 'prebattle'
+                        
+
 
     # Écran de sélection des Pokémon
     if game_status == 'select pokemon':
@@ -158,6 +236,32 @@ while game_status != 'quit':
                 pygame.draw.rect(game, black, pokemon.get_rect(), 2)
 
         pygame.display.update()
+
+    # get moves from the API reposition the pokemons 
+    if game_status == 'prebattle':
+
+        # draw the selected pokemon 
+        game.fill(white)
+        player_pokemon.draw()
+        pygame.display.update()
+
+
+        player_pokemon.set_moves()
+        rival_pokemon.set_moves()
+
+        #reposition the pokemon
+        player_pokemon.x = -50
+        player_pokemon.y = 100
+        rival_pokemon.x = 250
+        rival_pokemon.y = -50
+
+        # resize the sprites 
+        player_pokemon.size = 300
+        rival_pokemon.size = 300
+        player_pokemon.set_sprite('back_default')
+        rival_pokemon.set_sprite('front_default')
+
+        game_status = 'start battle'        
             
 pygame.quit()
 
