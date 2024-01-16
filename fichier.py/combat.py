@@ -5,7 +5,7 @@ import requests
 import io 
 from urllib.request import urlopen
 import random 
-
+import time
 pygame.init()
 
 # créer la fenêtre
@@ -94,6 +94,13 @@ class Pokemon(pygame.sprite.Sprite):
         #définir le sprite comme le sprite orienté vers l'avant
         self.set_sprite('front_default') 
 
+    def use_potion(self):
+        if self.num_potions > 0:
+            self.current_hp +=30
+            if self.current_hp >self.max_hp:
+                self.current_hp = self.max_hp
+            self.num_potions -= 1
+
     def set_sprite(self, side):
 
         # définir le sprite du Pokémon
@@ -149,8 +156,51 @@ class Pokemon(pygame.sprite.Sprite):
         sprite.fill(transparency, None, pygame.BLEND_RGBA_MULT)
         game.blit(sprite, (self.x, self.y))
 
+    def draw_hp(self):
+        bar_scale = 200 // self.max_hp
+        for i in range(self.max_hp):
+            bar = (self.hp_x + bar_scale * i ,self.hp_y , bar_scale , 20)
+            pygame.draw.rect(game , red , bar)
+
+        for i in range(self.current_hp):
+            bar = (self.hp_x + bar_scale * i , self.hp_y , bar_scale , 20)
+            pygame.draw.rect(game , green ,bar )
+
+        font = pygame.font.Font(pygame.font.get_default_font(), 16)
+        text = font.render(f'HP: {self.current_hp} / {self.max_hp}' , True , black)
+        text_rect = text.get_rect()
+        text_rect.x = self.hp_x
+        text_rect.y =self.hp_y + 30
+        game.blit(text , text_rect)
+
+
     def get_rect(self):
         return pygame.Rect(self.x, self.y, self.image.get_width(), self.image.get_height())
+def display_message(message):
+    pygame.draw.rect(game , white ,(10 , 350 , 480 , 140))
+    pygame.draw.rect(game, black, (10 , 350 , 480, 140),3)
+
+    font = pygame.font.Font(pygame.font.get_default_font(), 20)
+    text = font.render(message , True , black)
+    text_rect = text.get_rect()
+    text_rect.x = 30
+    text_rect.y = 410
+    game.blit(text , text_rect)
+
+    pygame.display.update()
+
+def  create_button(width , height , left , top , text_cx , text_cy , label):
+    mouse_cursor = pygame.mouse.get_pos()
+    button = Rect(left , top ,width , height)
+    if button.collidepoint(mouse_cursor):
+        pygame.draw.rect(game, gold , button )
+    else:
+        pygame.draw.rect(game , white , button )
+    font = pygame.font.Font(pygame.font.get_default_font(), 16)
+    text = font.render(f'{label}', True, black)
+    text_rect = text.get_rect(center = (text_cx, text_cy))
+    game.blit(text, text_rect)
+    return button
 
 niveau = 30
 # Définir les positions x et y pour l'affichage des Pokémon
@@ -213,6 +263,19 @@ while game_status != 'quit':
                         rival_pokemon.hp_y = 50
 
                         game_status = 'prebattle'
+            elif game_status == 'player turn':
+                if fight_button.collidepoint(mouse_click):
+                    game_status = 'player move'
+                if position_button.collidepoint(mouse_click):
+                    if player_pokemon.num_potions == 0:
+                        display_message('No more potions left')
+                        time.sleep(2)
+                        game_status ='player move'
+                    else:
+                        player_pokemon.use_potion()
+                        display_message(f'{player_pokemon.nom}used potion')
+                        time.sleep(2)
+                        game_status = 'rival turn'
                         
 
 
@@ -260,8 +323,77 @@ while game_status != 'quit':
         player_pokemon.set_sprite('back_default')
         rival_pokemon.set_sprite('front_default')
 
-        game_status = 'start battle'        
-            
+        game_status = 'start battle'  
+
+    if game_status ==  'start battle':
+        alpha = 0
+        while alpha < 255:
+            game.fill(white)
+            rival_pokemon.draw(alpha)
+            display_message(f'Rival sent out {rival_pokemon.nom}!')
+
+            alpha += .4
+
+            pygame.display.update()
+        time.sleep(1)  
+
+        alpha = 0 
+        while alpha < 225:
+            game.fill(white)
+            rival_pokemon.draw()
+            player_pokemon.draw(alpha)
+            display_message(f'Go {player_pokemon.nom}')  
+            alpha += .4
+
+            pygame.display.update()
+
+        player_pokemon.draw_hp()
+        rival_pokemon.draw_hp()
+
+        if rival_pokemon.speed > player_pokemon.speed:
+            game_status = 'rival turn'
+        else:
+            game_status = 'player turn'
+
+        pygame.display.update()
+
+        time.sleep(1)
+    
+    if game_status == 'player turn':
+        game.fill(white)
+        player_pokemon.draw()
+        rival_pokemon.draw()
+        player_pokemon.draw_hp()
+        rival_pokemon.draw_hp()
+
+        fight_button = create_button(240 , 140 , 10 , 350 , 130 , 412 , 'Fight')
+        position_button = create_button(240 , 140 , 250 , 350 , 370 , 412 , f'USE Potion ({player_pokemon.num_potions})')
+        pygame.draw.rect(game , black , (10 , 350 , 480 , 140), 3)
+
+        pygame.display.update()
+
+    if game_status == 'player move':
+        game.fill(white)
+        player_pokemon.draw()
+        rival_pokemon.draw()
+        player_pokemon.draw_hp()
+        rival_pokemon.draw_hp()
+
+        move_buttons = []
+        for i in range(len(player_pokemon.moves)):
+            move =player_pokemon.moves[i]
+            button_width = 240
+            button_height = 70
+            left = 10 + i % 2 * button_width
+            top = 350 + i // 2 * button_height
+            text_center_x = left + 120
+            text_center_y = top + 35
+            button = create_button(button_width , button_height , left , top , text_center_x , text_center_y , move.capitalize())
+            move_buttons.append(button)
+
+        pygame.draw.rect(game , black , (10 , 350 , 480 , 140), 3)
+        pygame.display.update()
+        
 pygame.quit()
 
 
