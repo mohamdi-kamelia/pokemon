@@ -8,11 +8,16 @@
          
     },
     {
-        "nom": "Charmander",
+        "name": "Charmander",
         "points_de_vie": 90,
-        "niveau": 5,
+        "niveau": 30,
         "puissance_attaque": 25,
-        "defense": 18
+        "defense": 18,
+        "types": ["Type1", "Type2"],
+        "x": 200,
+        "y": 50
+
+
     },
     {
         "nom": "Squirtle",
