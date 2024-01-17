@@ -6,6 +6,7 @@ import io
 from urllib.request import urlopen
 import random 
 import time
+import math
 pygame.init()
 
 # créer la fenêtre
@@ -93,6 +94,27 @@ class Pokemon(pygame.sprite.Sprite):
 
         #définir le sprite comme le sprite orienté vers l'avant
         self.set_sprite('front_default') 
+    def perform_attack(self , other , move):
+        display_message(f'{self.nom}used {move.nom}')
+        time.sleep(2)
+
+        damage = (2 * self.level + 10)/ 250 * self.attack /other.defense * move.power
+
+        if move.type in self.types :
+            damage *= 1,5
+
+        random_num = random.randint(1 , 10000)
+        if random_num <= 625:
+            damage *= 1.5
+
+        damage = math.floor(damage)
+        other.take_damage(damage)
+
+    def take_damage(self , damage):
+        self.current_hp -= damage
+
+        if self.current_hp < 0:
+            self.current_hp = 0
 
     def use_potion(self):
         if self.num_potions > 0:
@@ -210,6 +232,8 @@ x_squirtle, y_squirtle = 350, 50
 x_pikachu, y_pikachu = 500, 50
 x_sandshrew, y_sandshrew = 50, 250
 x_eevee, y_eevee = 200, 250
+
+
 # Créez les instances de la classe Pokemon avec les arguments nécessaires
 bulbasaur = Pokemon('Bulbasaur', 100, niveau, 25, 15, ['Type1', 'Type2'], x_bulbasaur, y_bulbasaur)
 charmander = Pokemon('Charmander', 90, niveau, 25, 18, ['Type1', 'Type2'], x_charmander, y_charmander)
@@ -276,6 +300,18 @@ while game_status != 'quit':
                         display_message(f'{player_pokemon.nom}used potion')
                         time.sleep(2)
                         game_status = 'rival turn'
+                    
+            elif game_status == 'player move':
+                for i in range(len(move_buttons)):
+                    button = move_buttons[i]
+                    if button.collidepoint(mouse_click):###############
+                        move = player_pokemon.moves[i]
+                        player_pokemon.perform_attack(rival_pokemon , move)
+
+                        if rival_pokemon.current_hp == 0:
+                            game_status = 'fainted'
+                        else:
+                            game_status = 'rival turn'
                         
 
 
@@ -390,6 +426,7 @@ while game_status != 'quit':
             text_center_y = top + 35
             button = create_button(button_width , button_height , left , top , text_center_x , text_center_y , move.capitalize())
             move_buttons.append(button)
+
 
         pygame.draw.rect(game , black , (10 , 350 , 480 , 140), 3)
         pygame.display.update()
