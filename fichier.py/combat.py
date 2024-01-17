@@ -211,18 +211,23 @@ def display_message(message):
 
     pygame.display.update()
 
-def  create_button(width , height , left , top , text_cx , text_cy , label):
+class Button:
+    def __init__(self, rect, label):
+        self.rect = rect
+        self.label = label
+
+def create_button(width, height, left, top, text_cx, text_cy, label):
     mouse_cursor = pygame.mouse.get_pos()
-    button = Rect(left , top ,width , height)
-    if button.collidepoint(mouse_cursor):
-        pygame.draw.rect(game, gold , button )
+    button_rect = Rect(left, top, width, height)
+    if button_rect.collidepoint(mouse_cursor):
+        pygame.draw.rect(game, gold, button_rect)
     else:
-        pygame.draw.rect(game , white , button )
+        pygame.draw.rect(game, white, button_rect)
     font = pygame.font.Font(pygame.font.get_default_font(), 16)
     text = font.render(f'{label}', True, black)
-    text_rect = text.get_rect(center = (text_cx, text_cy))
+    text_rect = text.get_rect(center=(text_cx, text_cy))
     game.blit(text, text_rect)
-    return button
+    return Button(button_rect, label)
 
 niveau = 30
 # Définir les positions x et y pour l'affichage des Pokémon
@@ -260,15 +265,12 @@ while game_status != 'quit':
             game_status = 'quit'
 
         # detect mouse click
-        if event.type == MOUSEBUTTONDOWN:
+        if event.type == MOUSEBUTTONDOWN :
             # coordinates of the mouse click
             mouse_click = event.pos
 
             # for selection a pokemon
             if game_status == 'select pokemon':
-
-
-
 
                 #check which pokemon was clicked on 
                 for current_pokemon in pokemons:
@@ -288,13 +290,13 @@ while game_status != 'quit':
 
                         game_status = 'prebattle'
             elif game_status == 'player turn':
-                if fight_button.collidepoint(mouse_click):
+                if fight_button.rect.collidepoint(mouse_click):
                     game_status = 'player move'
-                if position_button.collidepoint(mouse_click):
+                if position_button.rect.collidepoint(mouse_click):
                     if player_pokemon.num_potions == 0:
                         display_message('No more potions left')
                         time.sleep(2)
-                        game_status ='player move'
+                        game_status ='rival turn'
                     else:
                         player_pokemon.use_potion()
                         display_message(f'{player_pokemon.nom}used potion')
@@ -304,7 +306,7 @@ while game_status != 'quit':
             elif game_status == 'player move':
                 for i in range(len(move_buttons)):
                     button = move_buttons[i]
-                    if button.collidepoint(mouse_click):###############
+                    if button.rect.collidepoint(mouse_click):###############
                         move = player_pokemon.moves[i]
                         player_pokemon.perform_attack(rival_pokemon , move)
 
@@ -417,21 +419,19 @@ while game_status != 'quit':
 
         move_buttons = []
         for i in range(len(player_pokemon.moves)):
-            move =player_pokemon.moves[i]
+            move = player_pokemon.moves[i]
             button_width = 240
             button_height = 70
             left = 10 + i % 2 * button_width
             top = 350 + i // 2 * button_height
             text_center_x = left + 120
             text_center_y = top + 35
-            button = create_button(button_width , button_height , left , top , text_center_x , text_center_y , move.capitalize())
+            button = create_button(button_width, button_height, left, top, text_center_x, text_center_y, move.nom.capitalize())
             move_buttons.append(button)
 
-
-        pygame.draw.rect(game , black , (10 , 350 , 480 , 140), 3)
+        pygame.draw.rect(game, black, (10, 350, 480, 140), 3)
         pygame.display.update()
-        
-        
+
 pygame.quit()
 
 
