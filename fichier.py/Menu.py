@@ -6,7 +6,7 @@ pygame.init()
 SCREEN = pygame.display.set_mode((1280, 720))
 pygame.display.set_caption("Menu")
 
-BG = pygame.image.load("photos/img-2.jpg")
+BG = pygame.image.load("photos/Background.png")
 
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("photos/font.ttf", size)
@@ -104,7 +104,7 @@ def main_menu():
         POKEDEX_BUTTON = Button(image=pygame.image.load("photos/Options Rect.png"), pos=(650, 450), 
                             text_input="Ajouter un Pokémon ", font=get_font(50), base_color="#d7fcd4", hovering_color="White")
         QUIT_BUTTON = Button(image=pygame.image.load("photos/Quit Rect.png"), pos=(640, 550), 
-                            text_input="QUIT", font=get_font(70), base_color="#d7fcd4", hovering_color="White")
+                            text_input="QUIT", font=get_font(68), base_color="#d7fcd4", hovering_color="White")
 
         SCREEN.blit(MENU_TEXT, MENU_RECT)
 
