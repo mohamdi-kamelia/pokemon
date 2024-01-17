@@ -6,7 +6,7 @@ pygame.init()
 SCREEN = pygame.display.set_mode((1280, 720))
 pygame.display.set_caption("Menu")
 
-BG = pygame.image.load("photos/img-2.jpg")
+BG = pygame.image.load("photos/_005551e8-0912-4606-bc6e-c497483f9886.jpg")
 
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("photos/font.ttf", size)
