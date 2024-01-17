@@ -394,6 +394,7 @@ while game_status != 'quit':
         pygame.draw.rect(game , black , (10 , 350 , 480 , 140), 3)
         pygame.display.update()
         
+        
 pygame.quit()
 
 
