@@ -12,6 +12,7 @@ BG = pygame.image.load("photos/_6326d2ef-150c-49d9-9f30-88edb17c7953.jpg")
 
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("photos/font.ttf", size)
+    
 
 def Lancer_une_partie():
     while True:
@@ -117,6 +118,7 @@ def main_menu():
         #POKEMON_BUTTON = Button(pos=(640, 510), text_input="Accéder au Pokédex ", font=get_font(35), base_color="#000000", hovering_color="White")
         #POKEDEX_BUTTON = Button(pos=(650, 600), text_input="Ajouter un Pokémon ", font=get_font(35), base_color="#000000", hovering_color="White")
         #QUIT_BUTTON = Button(pos=(640, 680), text_input="QUIT", font=get_font(40), base_color="#000000", hovering_color="White") 
+
 
         SCREEN.blit(MENU_TEXT, MENU_RECT)
 
