@@ -6,7 +6,9 @@ pygame.init()
 SCREEN = pygame.display.set_mode((1280, 720))
 pygame.display.set_caption("Menu")
 
-BG = pygame.image.load("photos/_005551e8-0912-4606-bc6e-c497483f9886.jpg")
+
+BG = pygame.image.load("photos/_6326d2ef-150c-49d9-9f30-88edb17c7953.jpg")
+
 
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("photos/font.ttf", size)
@@ -22,7 +24,7 @@ def Lancer_une_partie():
         PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 260))
         SCREEN.blit(PLAY_TEXT, PLAY_RECT)
 
-        PLAY_BACK = Button(image=None, pos=(640, 460), 
+        PLAY_BACK = Button(pos=(640, 460), 
                             text_input="BACK", font=get_font(75), base_color="White", hovering_color="Green")
 
         PLAY_BACK.changeColor(PLAY_MOUSE_POS)
@@ -48,7 +50,7 @@ def Pokemon():
         POKEMON_RECT = POKEMON_TEXT.get_rect(center=(640, 260))
         SCREEN.blit(POKEMON_TEXT, POKEMON_RECT)
 
-        POKEMON_BACK = Button(image=None, pos=(640, 460), 
+        POKEMON_BACK = Button(pos=(640, 460), 
                             text_input="BACK", font=get_font(75), base_color="Black", hovering_color="Green")
 
         POKEMON_BACK.changeColor(POKEMON_MOUSE_POS)
@@ -73,7 +75,7 @@ def Pokédex():
         POKEDEX_RECT = POKEDEX_TEXT.get_rect(center=(640, 260))
         SCREEN.blit(POKEDEX_TEXT, POKEDEX_RECT)
 
-        POKEDEX_BACK = Button(image=None, pos=(640, 460), 
+        POKEDEX_BACK = Button(pos=(640, 460), 
                             text_input="BACK", font=get_font(75), base_color="Black", hovering_color="Green")
 
         POKEDEX_BACK.changeColor(POKEDEX_MOUSE_POS)
@@ -92,20 +94,22 @@ def Pokédex():
 def main_menu():
     while True:
         SCREEN.blit(BG, (0, 0))
+        resized_bg = pygame.transform.scale(BG, (1280, 720))
+
+        # Calculate the position to center the image
+        bg_rect = resized_bg.get_rect(center=(SCREEN.get_width() // 2, SCREEN.get_height() // 2))
+        SCREEN.blit(resized_bg, bg_rect)
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
 
-        MENU_TEXT = get_font(100).render("  POKEMON  ", True, "#b68f40")
+        MENU_TEXT = get_font(100).render("  POKEMON  ", True, "#FFD700")
         MENU_RECT = MENU_TEXT.get_rect(center=(640, 100))
 
-        PLAY_BUTTON = Button(image=pygame.image.load("photos/Play Rect.png"), pos=(640, 250), 
-                            text_input="Lancer une partie", font=get_font(50), base_color="#d7fcd4", hovering_color="White")
-        POKEMON_BUTTON = Button(image=pygame.image.load("photos/Play Rect.png"), pos=(640, 350), 
-                            text_input="Accéder au Pokédex ", font=get_font(50), base_color="#d7fcd4", hovering_color="White")
-        POKEDEX_BUTTON = Button(image=pygame.image.load(""), pos=(650, 450), 
-                            text_input="Ajouter un Pokémon ", font=get_font(50), base_color="#d7fcd4", hovering_color="White")
-        QUIT_BUTTON = Button(image=pygame.image.load("photos/Quit Rect.png"), pos=(640, 550), 
-                            text_input="QUIT", font=get_font(70), base_color="#d7fcd4", hovering_color="White")
+        PLAY_BUTTON = Button(pos=(640, 250), text_input="Lancer une partie", font=get_font(45), base_color="#000000", hovering_color="White")
+        POKEMON_BUTTON = Button(pos=(640, 350), text_input="Accéder au Pokédex ", font=get_font(45), base_color="#000000", hovering_color="White")
+        POKEDEX_BUTTON = Button(pos=(650, 450), text_input="Ajouter un Pokémon ", font=get_font(45), base_color="#000000", hovering_color="White")
+        QUIT_BUTTON = Button(pos=(640, 550), text_input="QUIT", font=get_font(50), base_color="#000000", hovering_color="White") 
+
 
         SCREEN.blit(MENU_TEXT, MENU_RECT)
 
