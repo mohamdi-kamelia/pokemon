@@ -11,6 +11,14 @@ import math
 
 pygame.init()
 
+black = (0, 0, 0)
+gold = (218, 165, 32)
+grey = (200, 200, 200)
+green = (0, 200, 0)
+red = (200, 0, 0)
+white = (255, 255, 255)
+K = (129, 178, 154)
+
 base_url = 'https://pokeapi.co/api/v2'
 
 class Type:
@@ -20,14 +28,19 @@ class Type:
 TYPES = [Type("Normal"), Type("Feu"), Type("Eau"), Type("Terre"), Type("Electric")]
 
 class Move:
-    def __init__(self, url):
+    def __init__(self, url , game):
         req = requests.get(url)
         self.json = req.json()
         self.name = self.json['name']
         self.power = self.json['power']
         self.type = self.json['type']['name']
-     
-
+        self.game =game 
+def display_message(game, message):
+    font = pygame.font.Font(pygame.font.get_default_font(), 32)
+    text = font.render(message, True, (255, 255, 255))
+    game.blit(text, (200, 300))
+    pygame.display.flip()
+    pygame.time.delay(2000)
 class Pokemon(pygame.sprite.Sprite):
     def __init__(self, nom, points_de_vie, niveau, puissance_attaque, defense, types, x, y , game):
         pygame.sprite.Sprite.__init__(self)
@@ -65,7 +78,8 @@ class Pokemon(pygame.sprite.Sprite):
 
         self.size = 150
         self.set_sprite('front_default')
-
+    
+    
     def perform_attack(self , other , move):
         display_message(f'{self.nom} used {move.name}')
         time.sleep(2)
@@ -138,11 +152,11 @@ class Pokemon(pygame.sprite.Sprite):
         bar_scale = 200 // self.max_hp
         for i in range(self.max_hp):
             bar = (self.hp_x + bar_scale * i, self.hp_y, bar_scale, 20)
-            pygame.draw.rect(game, red, bar)
+            pygame.draw.rect(self.game, red, bar)
 
         for i in range(self.current_hp):
             bar = (self.hp_x + bar_scale * i, self.hp_y, bar_scale, 20)
-            pygame.draw.rect(game, green, bar)
+            pygame.draw.rect(self.game, green, bar)
 
         font = pygame.font.Font(pygame.font.get_default_font(), 16)
         text = font.render(f'HP: {self.current_hp} / {self.max_hp}', True, black)
@@ -155,11 +169,11 @@ class Pokemon(pygame.sprite.Sprite):
         return pygame.Rect(self.x, self.y, self.image.get_width(), self.image.get_height())
 
 class Button:
-    def __init__(self, rect, label):
+    def __init__(self, rect, label ):
         self.rect = rect
         self.label = label
 
-def create_button(width, height, left, top, text_cx, text_cy, label):
+def create_button(width, height, left, top, text_cx, text_cy, label , game):
     mouse_cursor = pygame.mouse.get_pos()
     button_rect = Rect(left, top, width, height)
     if button_rect.collidepoint(mouse_cursor):

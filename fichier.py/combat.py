@@ -6,7 +6,6 @@ import random
 import time
 from pokemon import  *
 
-
 pygame.init()
 
 game_width = 700
@@ -42,14 +41,14 @@ pokemons = [bulbasaur, charmander, squirtle, pikachu, sandshrew, eevee, game]
 
 player_pokemon = None
 rival_pokemon = None
-
-game_status = 'select pokemon'
-def display_message(message):
+def display_message(game, message):
     font = pygame.font.Font(pygame.font.get_default_font(), 32)
     text = font.render(message, True, (255, 255, 255))
     game.blit(text, (200, 300))
     pygame.display.flip()
     pygame.time.delay(2000)
+
+game_status = 'select pokemon'
 while game_status != 'quit':
 
     for event in pygame.event.get():
@@ -88,12 +87,13 @@ while game_status != 'quit':
     if game_status == 'select pokemon':
         game.fill(K)
         for pokemon in pokemons:
-            Pokemon.draw()
+            game.blit(pokemon.image, (pokemon.x, pokemon.y))  # Utilisez blit pour dessiner l'image du Pokémon
         mouse_cursor = pygame.mouse.get_pos()
         for pokemon in pokemons:
             if pokemon.get_rect().collidepoint(mouse_cursor):
                 pygame.draw.rect(game, black, pokemon.get_rect(), 2)
         pygame.display.update()
+
 
     if game_status == 'prebattle':
         game.fill(white)
