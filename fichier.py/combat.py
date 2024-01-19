@@ -1,57 +1,80 @@
-# combat.py
-import random
 import json
+import random
+import requests
 
 class Combat:
-    def __init__(self, player_pokemon, opponent_pokemon):
-        self.player_pokemon = player_pokemon
-        self.opponent_pokemon = opponent_pokemon
+    def __init__(self, joueur_pokemon):
+        self.joueur_pokemon = joueur_pokemon
+        self.adversaire_pokemon = self.choisir_adversaire()
 
-    def get_type_multiplier(self, attacker, defender):
-        return 1.0  # Simplification, vous pouvez ajouter votre logique ici
-
-    def calculate_damage(self, attacker, defender):
-        base_damage = random.randint(10, 20)  # À ajuster
-        type_multiplier = self.get_type_multiplier(attacker, defender)
-        damage = (attacker.get_attack() / defender.get_defense()) * base_damage * type_multiplier
-        return int(damage)
-
-    def apply_damage(self, damage, target):
-        target.receive_damage(damage)
-
-    def determine_winner(self):
-        if self.player_pokemon.get_hp() > 0 and self.opponent_pokemon.get_hp() <= 0:
-            return 'player'
-        elif self.opponent_pokemon.get_hp() > 0 and self.player_pokemon.get_hp() <= 0:
-            return 'opponent'
+    
+    def choisir_adversaire():
+    # Fonction pour choisir un adversaire depuis l'API
+        api_url = "https://pokeapi.co/api/v2/pokemon/"
+        pokemon_id = random.randint(1, 100)  # Choisissez un Pokémon au hasard
+        url = f"{api_url}{pokemon_id}"
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.json()
         else:
-            return 'none'
+            print(f"Erreur lors de la requête à l'API: {response.status_code}")
+            return None
 
-    def get_winner_name(self):
-        winner = self.determine_winner()
-        if winner == 'player':
-            return self.player_pokemon.get_name()
-        elif winner == 'opponent':
-            return self.opponent_pokemon.get_name()
-        else:
-            return 'none'
-
-    def save_to_pokedex(self, pokedex):
-        if self.determine_winner() == 'player':
-            pokedex.add_pokemon(self.player_pokemon)
-        elif self.determine_winner() == 'opponent':
-            pokedex.add_pokemon(self.opponent_pokemon)
-
-    def start_combat(self):
-        damage_to_opponent = self.calculate_damage(self.player_pokemon, self.opponent_pokemon)
-        self.apply_damage(damage_to_opponent, self.opponent_pokemon)
-
-        damage_to_player = self.calculate_damage(self.opponent_pokemon, self.player_pokemon)
-        self.apply_damage(damage_to_player, self.player_pokemon)
-
-        return {
-            'winner': self.determine_winner(),
-            'winner_name': self.get_winner_name(),
-            'damage_to_opponent': damage_to_opponent,
-            'damage_to_player': damage_to_player
+    def get_type_multiplier(self, attaquant_type, defenseur_type):
+        type_multipliers = {
+            "eau": {"eau": 1, "feu": 2, "terre": 0.5, "normal": 1},
+            "feu": {"eau": 0.5, "feu": 1, "terre": 2, "normal": 1},
+            "terre": {"eau": 2, "feu": 0.5, "terre": 1, "normal": 1},
+            "normal": {"eau": 0.75, "feu": 0.75, "terre": 0.75, "normal": 1}
         }
+
+        try:
+            type_multiplier = type_multipliers[attaquant_type][defenseur_type]
+        except KeyError:
+            # Gérer le cas où le type n'est pas défini, par exemple en renvoyant un multiplicateur neutre
+            type_multiplier = 1
+
+        return type_multiplier
+
+    def calculer_degats(self, attaquant_type, attaquant_attaque, defenseur_type):
+        type_multiplier = self.get_type_multiplier(attaquant_type, defenseur_type)
+        degats = int(attaquant_attaque * type_multiplier)
+        return degats
+
+    def enlever_points_de_vie(self, degats):
+        self.adversaire_pokemon["points_de_vie"] -= degats
+
+    def est_vivant(self):
+        return self.adversaire_pokemon["points_de_vie"] > 0
+
+    def obtenir_vainqueur(self):
+        if self.est_vivant():
+            return None
+        else:
+            return self.joueur_pokemon["nom"]
+
+    def enregistrer_pokemon_dans_pokedex(self):
+        try:
+            with open("pokedex.json", "r") as file:
+                pokedex = json.load(file)
+        except FileNotFoundError:
+            # Si le fichier n'existe pas, créez-le avec un dictionnaire vide
+            pokedex = {}
+
+        if self.adversaire_pokemon["nom"] not in pokedex:
+            pokedex[self.adversaire_pokemon["nom"]] = {
+                "type": self.adversaire_pokemon["type"],
+                "defense": self.adversaire_pokemon["defense"],
+                "attaque": self.adversaire_pokemon["attaque"],
+                "points_de_vie": self.adversaire_pokemon["points_de_vie"]
+            }
+
+            with open("pokedex.json", "w") as file:
+                json.dump(pokedex, file, indent=2)
+
+    def afficher_resultat_combat(self):
+        vainqueur = self.obtenir_vainqueur()
+        if vainqueur:
+            print(f"Le Pokémon {vainqueur} remporte le combat!")
+        else:
+            print("Le combat se termine par un match nul.")

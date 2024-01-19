@@ -39,5 +39,26 @@
         "niveau": 5,
         "puissance_attaque": 27,
         "defense": 16
+    },
+    {
+        "nom": "Bulbizarre",
+        "type": "Plante",
+        "attaque": 15,
+        "defense": 10,
+        "points_de_vie": 50
+    },
+    {
+        "nom": "Carapuce",
+        "type": "Eau",
+        "attaque": 18,
+        "defense": 8,
+        "points_de_vie": 45
+    },
+    {
+        "nom": "Salamèche",
+        "type": "Feu",
+        "attaque": 20,
+        "defense": 5,
+        "points_de_vie": 40
     }
 ]

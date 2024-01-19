@@ -1,82 +1,60 @@
 import pygame
-from pygame.locals import QUIT, KEYDOWN, K_ESCAPE, K_RETURN
-from pokemon import Pokemon
+import sys
 from combat import Combat
-from pokedex import Pokedex
 
-class PokemonGame:
-    def __init__(self):
-        pygame.init()
-        self.screen = pygame.display.set_mode((400, 300))
-        pygame.display.set_caption("Pokemon Game")
+# Initialise Pygame
+pygame.init()
 
-        self.clock = pygame.time.Clock()
-        self.font = pygame.font.Font(None, 36)
+# Définissez quelques couleurs
+BLANC = (255, 255, 255)
+NOIR = (0, 0, 0)
 
-        self.pokedex = Pokedex()
+# Définissez la taille de la fenêtre
+largeur, hauteur = 800, 600
+fenetre = pygame.display.set_mode((largeur, hauteur))
+pygame.display.set_caption("Pokémon Combat")
 
-    def display_menu(self):
-        self.screen.fill((255, 255, 255))
+# Définissez votre Pokémon
+joueur_pokemon = {
+    "nom": "Pikachu",
+    "type": "Electrique",
+    "attaque": 20,
+    "defense": 10,
+    "points_de_vie": 50
+}
 
-        menu_text = [
-            "1. Lancer une partie",
-            "2. Accéder au Pokédex",
-            "3. Quitter"
-        ]
+# Créez une instance de la classe Combat
+combat = Combat(joueur_pokemon)
 
-        y = 50
-        for line in menu_text:
-            text = self.font.render(line, True, (0, 0, 0))
-            self.screen.blit(text, (50, y))
-            y += 40
+# Boucle principale du jeu
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            # Simuler un tour de combat à chaque clic de souris
+            degats = combat.calculer_degats(combat.joueur_pokemon["type"], combat.joueur_pokemon["attaque"],
+                                           combat.adversaire_pokemon["type"])
+            combat.enlever_points_de_vie(degats)
+            print(f"{combat.adversaire_pokemon['nom']} subit {degats} dégâts. Points de vie restants: {combat.adversaire_pokemon['points_de_vie']}")
 
-        pygame.display.flip()
+            # Affichez le résultat du combat
+            combat.afficher_resultat_combat()
 
-    def start_game(self):
-        player_pokemon_name = input("Choisissez un Pokémon pour commencer: ")
-        if not player_pokemon_name:
-            return
+            # Enregistrez le Pokémon dans le Pokédex
+            combat.enregistrer_pokemon_dans_pokedex()
 
-        player_pokemon = Pokemon(player_pokemon_name)
-        opponent_pokemon_name = "bulbasaur"  # Choisissez un Pokémon arbitraire ici
-        opponent_pokemon = Pokemon(opponent_pokemon_name)
+    # Affichez les détails du combat dans la fenêtre
+    fenetre.fill(BLANC)
+    font = pygame.font.Font(None, 36)
+    joueur_texte = font.render(f"Joueur Pokémon: {combat.joueur_pokemon}", True, NOIR)
+    adversaire_texte = font.render(f"Adversaire Pokémon: {combat.adversaire_pokemon}", True, NOIR)
+    fenetre.blit(joueur_texte, (10, 10))
+    fenetre.blit(adversaire_texte, (10, 50))
 
-        combat = Combat(player_pokemon, opponent_pokemon)
-        combat_result = combat.start_combat()
+    # Rafraîchissez l'écran
+    pygame.display.flip()
 
-        print(f"Le gagnant est : {combat_result['winner_name']}")
-        print(f"Dommages infligés à l'adversaire : {combat_result['damage_to_opponent']}")
-        print(f"Dommages subis par le joueur : {combat_result['damage_to_player']}")
-
-        combat.save_to_pokedex(self.pokedex)
-
-    def display_pokedex(self):
-        self.pokedex.display_pokemon()
-
-    def run(self):
-        running = True
-        while running:
-            self.display_menu()
-
-            for event in pygame.event.get():
-                if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
-                    running = False
-                elif event.type == KEYDOWN and event.key == K_RETURN:
-                    choice = input("Votre choix (1-3): ")
-                    if choice == "1":
-                        self.start_game()
-                    elif choice == "2":
-                        self.display_pokedex()
-                    elif choice == "3":
-                        print("Au revoir !")
-                        running = False
-                    else:
-                        print("Choix invalide. Veuillez entrer un nombre entre 1 et 3.")
-
-            self.clock.tick(30)
-
-        pygame.quit()
-
-if __name__ == "__main__":
-    game = PokemonGame()
-    game.run()
+# Quittez Pygame
+pygame.quit()

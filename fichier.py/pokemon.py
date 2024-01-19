@@ -1,58 +1,92 @@
-# pokemon.py
-import requests
-import random
+# main_gui.py
+import pygame
+from pygame.locals import QUIT, KEYDOWN, K_ESCAPE, MOUSEBUTTONDOWN, K_RETURN
+from pokemon import Pokemon
+from combat import Combat
+from pokedex import Pokedex
 
-class Pokemon:
-    def __init__(self, pokemon_name, hp=None, attack_power=None, defense=None, types=None):
-        self.name = pokemon_name
-        self.base_url = 'https://pokeapi.co/api/v2/pokemon/'
-        self.url = f'{self.base_url}{self.name.lower()}/'
+class PokemonGame:
+    def __init__(self):
+        pygame.init()
+        self.screen = pygame.display.set_mode((400, 300))
+        pygame.display.set_caption("Pokemon Game")
 
-        if hp is None or attack_power is None or defense is None or types is None:
-            self.data = self.get_pokemon_data()
-        else:
-            self.data = {
-                'name': pokemon_name,
-                'stats': {
-                    'hp': hp,
-                    'attack': attack_power,
-                    'defense': defense
-                },
-                'types': types
-            }
+        self.clock = pygame.time.Clock()
+        self.font = pygame.font.Font(None, 36)
 
-    def get_pokemon_data(self):
-        response = requests.get(self.url)
-        return response.json()
+        self.pokedex = Pokedex()
 
-    def get_name(self):
-        return self.data['name']
+        # Définir les boutons
+        self.buttons = [
+            {"text": "Lancer une partie", "action": self.start_game, "rect": pygame.Rect(50, 50, 300, 30)},
+            {"text": "Choisir un Pokémon", "action": self.choose_pokemon, "rect": pygame.Rect(50, 100, 300, 30)},
+            {"text": "Accéder au Pokédex", "action": self.display_pokedex, "rect": pygame.Rect(50, 150, 300, 30)},
+            {"text": "Quitter", "action": self.quit_game, "rect": pygame.Rect(50, 200, 300, 30)}
+        ]
 
-    def get_stats(self):
-        stats = self.data['stats']
-        return {stat['stat']['name']: stat['base_stat'] for stat in stats}
+    def display_menu(self):
+        self.screen.fill((255, 255, 255))
 
-    def get_attack(self):
-        return self.get_stats()['attack']
+        for button in self.buttons:
+            pygame.draw.rect(self.screen, (200, 200, 200), button["rect"])
+            text = self.font.render(button["text"], True, (0, 0, 0))
+            text_rect = text.get_rect(center=button["rect"].center)
+            self.screen.blit(text, text_rect)
 
-    def get_defense(self):
-        return self.get_stats()['defense']
+        pygame.display.flip()
 
-    def get_hp(self):
-        return self.get_stats()['hp']
+    def start_game(self):
+        player_pokemon_name = input("Choisissez un Pokémon pour commencer: ")
+        if not player_pokemon_name:
+            return
 
-    def receive_damage(self, damage):
-        # Réduit les points de vie du Pokémon en fonction des dégâts reçus
-        current_hp = self.get_hp()
-        new_hp = max(0, current_hp - damage)
-        self.data['stats']['hp'] = new_hp
+        player_pokemon = Pokemon(player_pokemon_name)
+        opponent_pokemon_name = "bulbasaur"  # Choisissez un Pokémon arbitraire ici
+        opponent_pokemon = Pokemon(opponent_pokemon_name)
 
-    def display_info(self):
-        print(f"Name: {self.get_name()}")
-        print(f"HP: {self.get_hp()}")
-        print(f"Attack: {self.get_attack()}")
-        print(f"Defense: {self.get_defense()}")
-        print(f"Types: {', '.join(self.data['types'])}")
+        combat = Combat(player_pokemon, opponent_pokemon)
+        combat_result = combat.start_combat()
+
+        print(f"Le gagnant est : {combat_result['winner_name']}")
+        print(f"Dommages infligés à l'adversaire : {combat_result['damage_to_opponent']}")
+        print(f"Dommages subis par le joueur : {combat_result['damage_to_player']}")
+
+        combat.save_to_pokedex(self.pokedex)
+
+    def choose_pokemon(self):
+        # Implémentez la logique pour afficher la page Pokémon ici
+        # Vous pouvez utiliser une nouvelle classe ou une fonction dédiée pour cela
+        print("Page Pokémon : Choisissez votre Pokémon")
+
+    def display_pokedex(self):
+        self.pokedex.display_pokemon()
+
+    def quit_game(self):
+        print("Au revoir !")
+        pygame.quit()
+
+    def run(self):
+        running = True
+        while running:
+            self.display_menu()
+
+            for event in pygame.event.get():
+                if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+                    running = False
+                elif event.type == MOUSEBUTTONDOWN and event.button == 1:
+                    # Vérifier si un bouton a été cliqué
+                    for button in self.buttons:
+                        if button["rect"].collidepoint(event.pos):
+                            button["action"]()
+
+            self.clock.tick(30)
+
+        pygame.quit()
+
+if __name__ == "__main__":
+    game = PokemonGame()
+    game.run()
+
 
 
 

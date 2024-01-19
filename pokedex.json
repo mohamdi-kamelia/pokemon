@@ -1,0 +1,14 @@
+{
+  "Salam\u00c3\u00a8che": {
+    "type": "Feu",
+    "defense": 5,
+    "attaque": 20,
+    "points_de_vie": -20
+  },
+  "Carapuce": {
+    "type": "Eau",
+    "defense": 8,
+    "attaque": 18,
+    "points_de_vie": 25
+  }
+}
