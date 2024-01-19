@@ -1,316 +1,525 @@
-{"Pokemon1" [
-    "Nom" : "Mew"
-    "Catégorie" : "Nouveau"
-    "Couleur" : "Rose" 
-    "Exp au niveau 100" :	"1 059 860" 
-    "Poids" :	"4 kg"
-    "Points effort" : "+3 PV"
-    "Points exp" : "64" 
-    "Premier type" : "Psy" 
-    "Taille" : "40 cm"
-    "Taux de capture" : "45" 
-    "Éclosion" : "119" ]
-}
-{"Pokemon2" [
-    "Nom" : "Mewtwo"
-    "Catégorie" : "Génétiquement modifié à partir de Mew"
-    "Couleur" : "Violet"
-    "Exp au niveau 100" : "1 250 000" 
-    "Poids" :	"122 kg" 
-    "Points effort" :	"+3 Att. Spé"
-    "Points exp" : "220" 
-    "Type" : "Psy" 
-    "Taille" : "2 m" 
-    "Taux de capture" : "3" 
-    "Éclosion" : "119" ]
-}
-{"Pokemon3" [ 
-    "Nom" : "Stari"
-    "Catégorie" : "Étoile"
-    "Couleur" : "Brun"
-    "Exp au niveau 100" :	"1 250 000"
-    "Poids" :	"34,5 kg"
-    "Points effort" : "+1 Vit." 
-    "Points exp" : "106" 
-    "Type" : "Eau" 
-    "Taille" : "80 cm"
-    "Taux de capture" : "225" 
-    "Éclosion" : "5 120" ]
-}
-{"Pokemon4" [
-    "Nom" : "Staross"
-    "Catégorie" : "Mystérieux"
-    "Couleur" : "Violet"
-    "Exp au niveau 100" : "1 250 000" 
-    "Poids" : "80 kg"
-    "Points effort" :	"+2 Vit."
-    "Points exp" : "207" 
-    "Type1" : "Eau"
-    "Type2" : "Psy" 
-    "Taille" : "1,1 m" 
-    "Taux de capture" : "60" 
-    "Éclosion" : "5 120" ]
-}
-{"Pokemon5" [
-    "Nom" : "Milobellus"
-    "Catégorie" : "Tendre" 
-    "Couleur" : "Rose"
-    "Exp au niveau 100" :	"600 000" 
-    "Poids" :	"162 kg"
-    "Points effort" :	"+2 Déf. Spé" 
-    "Points exp" : "213" 
-    "Type" : "Eau" 
-    "Taille" : "6,2 m"
-    "Taux de capture" : "60" 
-    "Éclosion" : "19" 
-    "Pv" : "95"
-    "Speed" : "81"
-    "Attaque" : "60"
-    "Défense" : "79"
-    "Attaque spé" : "100"
-    "Defense spé" : "125"]
-}
-{"Pokemon6" [
-    "Nom" : "Bulbizarre"
-    "Catégorie" :	"Graine" 
-    "Couleur" : "Vert" 
-    "Exp au niveau 100" : "1 059 860" 
-    "Poids" :	"6,9 kg"
-    "Points effort" :	"+1 Att. Spé" 
-    "Points exp" : "64" 
-    "Type" : "Plante" 
-    "Type" : "Poison" 
-    "Taille" : "70 cm" 
-    "Taux de capture" : "45"
-    "Éclosion" : "19" ]
-}
-{"Pokemon7" [
-    "Nom" : "Ligotage"
-    "Catégorie" :	"Physique" 
-    "Charme concours" : "3"
-    "Charme super concours" :	"0"
-    "PP" : "20" 
-    "Précision" :	"90" 
-    "Puissance" : "15" 
-    "Type" : "Normal" 
-    "Type concours" : "Robustesse" 
+[
+
+        {
+            "Nom" : "Mew",
+            "Type" : "Psy",
+            "Espèce" : "Nouveau",
+            "Couleur" : "Rose" ,
+            "Exp au niveau 100" :	"1 059 860" ,
+            "Poids" :	"4 kg",
+            "Points effort" : "+3 PV",
+            "Points exp" : "64" , 
+            "Taille" : "40 cm",
+            "Taux de capture" : "45" ,
+            "Éclosion" : "119", 
+            "Pv" : "100",
+            "Speed" : "100",
+            "Attaque" :"100",
+            "Défense" : "100",
+            "Attaque spé" : "100",
+            "Défense Spé" : "100"
+        
+    },
+
+    {
+        "Pokemon2" :
+        {
+            "Nom" : "Mewtwo",
+            "Espèce" : "Génétiquement modifié à partir de Mew",
+            "Couleur" : "Violet"    ,
+            "Exp au niveau 100" : "1 250 000" ,
+            "Poids" :	"122 kg" ,
+            "Points effort" :	"+3 Att. Spé",
+            "Points exp" : "220" ,
+            "Type" : "Psy" ,
+            "Taille" : "2 m", 
+            "Taux de capture" : "3" ,
+            "Éclosion" : "119", 
+            "Pv" : "106",
+            "Speed" : "130",
+            "Attaque" : "110",
+            "Défense" : "90",
+            "Attaque spé" : "154",
+            "Défense spé" : "90"
+        }
+    } ,
+
+    {   
+        "Pokemon3" :
+        {
+            "Nom" : "Stari",
+            "Espèce" : "Étoile",
+            "Couleur" : "Marron",
+            "Exp au niveau 100" :	"1 250 000",
+            "Poids" :	"34,5 kg",
+            "Points effort" : "+1 Vit.", 
+            "Points exp" : "106",
+            "Type" : "Eau",
+            "Taille" : "80 cm",
+            "Taux de capture" : "225", 
+            "Éclosion" : "5 120",
+            "Pv" : "30",
+            "Speed" : "85",
+            "Attaque" : "45",
+            "Défense" : "55",
+            "Attaque Spé" : "70",
+            "Défense Spé" : "55"
+        }
+    },
+
+    {   
+        "Pokemon4" :
+        {
+            "Nom" : "Staross",
+            "Espèce" : "Mystérieux",
+            "Couleur" : "Violet",
+            "Exp au niveau 100" : "1 250 000", 
+            "Poids" : "80 kg",
+            "Points effort" :	"+2 Vit.",
+            "Points exp" : "207" ,
+            "Type1" : "Eau",
+            "Type2" : "Psy" ,
+            "Taille" : "1,1 m", 
+            "Taux de capture" : "60" ,
+            "Éclosion" : "5 120" ,
+            "Pv" : "60",
+            "Speed" : "115",
+            "Attaque" : "75",
+            "Défense" : "85",
+            "Attaque spé" : "100",
+            "Défense spé" : "85"
+        }
+    },
+
+    {   
+        "Pokemon5" :
+        {
+            "Nom" : "Milobellus",
+            "Espèce" : "Tendre", 
+            "Couleur" : "Rose",
+            "Exp au niveau 100" :	"600 000", 
+            "Poids" :	"162 kg",
+            "Points effort" :	"+2 Déf. Spé", 
+            "Points exp" : "213" ,
+            "Type" : "Eau" ,
+            "Taille" : "6,2 m",
+            "Taux de capture" : "60", 
+            "Éclosion" : "19" ,
+            "Pv" : "95",
+            "Speed" : "81",
+            "Attaque" : "60",
+            "Défense" : "79",
+            "Attaque spé" : "100",
+            "Defense spé" : "125"
+        }
+    },
+
+    {   
+        "Pokemon6"  :
+        {
+            "Nom" : "Togepi",
+            "Espèce" :	"Balle Pic", 
+            "Couleur" : "Blanc" ,
+            "Exp au niveau 100" :	"800 000" ,
+            "Poids" :	"1,5 kg",
+            "Points effort" :	"+1 Déf. Spé", 
+            "Points exp" : "74",
+            "Type" : "Fée" ,
+            "Taille" : "30 cm", 
+            "Taux de capture" : "190", 
+            "Éclosion" : "10",
+            "Pv" : "35",
+            "Speed" :"20",
+            "Attaque" : "20",
+            "Défense" : "65",
+            "Attaque spé" : "40",
+            "Défense spé" : "65"
+        }
+    },
+
+    {   
+        "Pokemon7" :
+        {
+            "Nom" : "Persian", 
+            "Type" : "Normal",
+            "Espèce" : "Chadeville", 
+            "Couleur" : "Jaune",
+            "Taille" : "1 m",
+            "Poids" : "32 kg",
+            "Pv" : "65",
+            "Speed" : "115",
+            "Attaque": "70",
+            "Defense" : "60",
+            "Attaque spé" : "65",
+            "Defense spé" : "65" ,
+            "Exp au niveau 100" :	"1 000 000", 
+            "Points effort" :	"+2 Vit." ,
+            "Points exp" : "148" ,
+            "Taux de capture" : "90", 
+            "Éclosion" : "19" 
+        }
+    },    
+
+    {   
+        "Pokemon8" :
+        {
+            "Nom" : "Voltali",
+            "Type" : "Électrik",
+            "Espèce" : "Orage",
+            "Couleur" : "Jaune",
+            "Taille" : "80 cm",
+            "Poids" : "24.5 kg",
+            "Pv" : "65",
+            "Speed" : "130",
+            "Attaque" :  "65",
+            "Défense" : "60",
+            "Attaque spé" : "110",
+            "Défense spé" : "95",
+            "Exp au niveau 100" :	"1 000 000", 
+            "Points effort" :	"+2 Vit." ,
+            "Points exp" : "197" ,
+            "Taux de capture" : "45", 
+            "Éclosion" : "34" 
+            }
+        },
+    {
+        "Pokemon9" :
+        {
+            "Nom" : "Arcanin",
+            "Type" : "Feu",
+            "Espèce" : "Légendaire",
+            "Couleur" : "Marron",
+            "Taille" : "1.9 m",
+            "Poids" : "155 kg",
+            "Pv" : "90",
+            "Speed" : "95",
+            "Attaque" : "110",
+            "Défense" : "80",
+            "Attaque spé" : "100",
+            "Défense spé" : "80",
+            "Exp au niveau 100" :	"1 250 000", 
+            "Points effort" :	"+2 Att." ,
+            "Points exp" : "213",
+            "Taux de capture" : "75", 
+            "Éclosion" : "19" 
+        }
+    },
+
+    {       
+        "Pokemon10" :
+        {
+            "Nom" : "Pyroli",
+            "Type" : "Feu",
+            "Espèce" : "Flamme",
+            "Couleur" : "Rouge",
+            "Taille" : "90 cm",
+            "Poids" : "25 kg",
+            "Pv" : "65",
+            "Speed" : "65",
+            "Attaque" : "130",
+            "Défense" : "60",
+            "Attaque spé" : "95",
+            "Défense spé" : "110",
+            "Exp au niveau 100" :	"1 000 000", 
+            "Points effort" :	"+2 Att." ,
+            "Points exp" : "184" ,
+            "Taux de capture" : "45", 
+            "Éclosion" : "34"
+        }
+    },
+    {   
+        "Pokemon11" :
+        {
+            "Nom" : "Laggron",
+            "Type": "Eau et Sol",
+            "Espèce" : "PoissonBoue",
+            "Couleur" : "Bleu",
+            "Taille" : "1.5 m",
+            "Poids" : "81.9 kg",
+            "Pv" : "100",
+            "Speed" : "60",
+            "Attaque" : "110",
+            "Défense" : "90",
+            "Attaque spé" : "85",
+            "Défense spé" : "90",
+            "Exp au niveau 100" :	"1 059 860" ,
+            "Points effort" :	"+3 Att." ,
+            "Points exp" : "210" ,
+            "Taux de capture" : "45", 
+            "Éclosion" : "19" 
+        }   
+    },
+    {       
+        "Pokemon12"  :
+        {
+            "Nom" : "Tyranocif",
+            "Type": "Roche Ténèbres",
+            "Espèce" : "Armure",
+            "Couleur" : "Vert",
+            "Taille" : "2 m",
+            "Poids" : "202 kg",
+            "Pv" : "100",
+            "Speed" : "61",
+            "Attaque" : "134",
+            "Défense" : "110",
+            "Attaque spé" : "95",
+            "Défense spé" : "100",
+            "Exp au niveau 100" :	"1 250 000", 
+            "Points effort" :	"+3 Att." ,
+            "Points exp" : "218" ,
+            "Taux de capture" : "45", 
+            "Éclosion" : "39" 
+        }
+    },
+    {   
+        "Pokemon13" :
+        {
+            "Nom" : "Raikou",
+            "Type" : "Électrik",
+            "Espèce" : "Foudre",
+            "Couleur" : "Jaune",
+            "Taille" : "1.9 m",
+            "Poids" : "178 kg",
+            "Pv" : "90",
+            "Speed" : "115",
+            "Attaque" : "85",
+            "Défense" : "75",
+            "Attaque spé" : "115",
+            "Défense spé" : "100",
+            "Exp au niveau 100" :	"1 250 000", 
+            "Points exp" : "216" ,
+            "Taux de capture" : "3" ,
+            "Éclosion" :	"79"
+        }        
+    },   
+    {   
+        "Pokemon14" :
+        {
+            "Nom" : "Drattak",
+            "Couleur" : "Bleu", 
+            "Exp au niveau 100" :	"1 250 000", 
+            "Points effort" :	"+3 Att." ,
+            "Points exp" : "218" ,
+            "Taux de capture" : "45", 
+            "Éclosion" : "39" ,
+            "Type" : "Dragon Vol",
+            "Espèce" : "Dragon",
+            "Taille" : "1.5 m",
+            "Poids" : "102.6 kg",
+            "Pv" : "95",
+            "Speed" : "100",
+            "Attaque" : "135",
+            "Défense" : "80",
+            "Attaque spé" : "110",
+            "Défense spé" : "80" 
+        }
+    },
+    {
+        "Pokemon15" :
+        {
+            "Nom" : "Reshiram",
+            "Espèce" : "Blanc Réel", 
+            "Couleur" : "Blanc" ,
+            "Exp au niveau 100" :	"1 250 000", 
+            "Poids" :	"330 kg",
+            "Points effort" : "+3 Att. Spé", 
+            "Points exp" : "306" ,
+            "Type1" : "Dragon" ,
+            "Type2" : "Feu" ,
+            "Taille" : "3,2 m",
+            "Taux de capture" : "3" ,
+            "Éclosion" : "120",
+            "Pv" : "100",	
+            "Attaque" : "120",	
+            "Défense" : "100",	
+            "Attaque spé" : "150",	
+            "Défense spé"	: "120"	,
+            "Speed"	: "90" 
+        }
+    },
+    {   
+        "Pokemon16"  :
+        {
+            "Nom" : "Volcanion",
+            "Espèce" :	"Vapeur",
+            "Couleur" : "Rouge" ,
+            "Exp au niveau 100" :	"1 250 000", 
+            "Poids"	: "195 kg",
+            "Points effort" :	"+3 Attaque Spéciale", 
+            "Points exp" : "270" ,
+            "Type1" : "Feu" ,
+            "Type2" : "Eau" ,
+            "Taille" : "1,7 m",
+            "Taux de capture" : "3",
+            "Éclosion" : "120", 
+            "Speed" : "70",
+            "Pv" : "80",
+            "Attaque" : "110",
+            "Défense" : "120",	
+            "Attaque spé" : "130",
+            "Défense spé" : "90"
+        } 
+    },
+
+    {   
+        "Pokemon17" :
+        {
+            "Nom" : "Arceus Électrik",
+            "Type" : "Électrik",
+            "Pv" :	"120"	,
+            "Attaque" : "120",	
+            "Défense" : "120",	
+            "Attaque spé" : "120",	
+            "Défense spé" : "120",	
+            "Speed" : "120",	
+            "Espèce" : "Alpha", 
+            "Couleur" : "Gris Blanc", 
+            "Exp au niveau 100" :	"1 250 000", 
+            "Poids" :	"320 kg",
+            "Points effort" :	"+3 PV" ,
+            "Points exp" : "324" ,
+            "Taille" : "3,2 m",
+            "Taux de capture" :"3",
+            "Éclosion" : "119" 
+        }
+    },
+
+    {
+        "Pokemon18" : 
+        {            
+            "Nom" : "Bulbizarre",
+            "Type" :  "Plante Poison",
+            "Taille" : "70 cm", 
+            "Couleur" : "Vert",
+            "Poids" :	"6,9 kg", 
+            "Espèce " : "Graine",
+            "Éclosion" : "19",
+            "Points effort" :	"+1 Att. Spé",
+            "Points exp." : "64",
+            "Exp au niveau 100" : 	"1 059 860", 
+            "Taux de capture" :	"45",
+            "Pv" : "45",
+            "Speed" : "45",
+            "Attaque" : "49",
+            "Défense" : "49",
+            "Attaque spé" : "65",
+            "Défense spé" : "65"
+        }  
+    },
+
+    {
+        "Pokemon19" : 
+        {
+
+            "Nom" : "Évoli",
+            "Type" : "Normal",
+            "Couleur" :	"Marron",
+            "Espèce" : "Évolutif",
+            "Exp au niveau 100" : "1 000 000",
+            "Poids" : "6,5kg",
+            "Points effort" : "+1 Déf. Spé",
+            "Points exp" : "92",
+            "Taille" :	"30 cm",
+            "Taux de capture" :	"45",
+            "Éclosion" : "34",
+            "Pv" : "55",
+            "Speed" : "55",
+            "Attaque" : "55",
+            "Défense" : "50",
+            "Attaque spé" : "45", 
+            "Défense spé" : "65"
+        }
+    },
+
+    {
+        "Pokemon20" : 
+        {
+            "Nom" : "Salamèche",
+            "Type" : "Feu",
+            "ESPÈCE" : "Lézard",
+            "Couleur" : "Rouge",
+            "Taille" : "60 cm",
+            "Poids" : "8.5 kg",
+            "Pv" : "39",
+            "Speed" : "65",
+            "Attaque" : "52",
+            "Défense" : "43",
+            "Attaque spé" : "60",
+            "Défense spé" : "50", 
+            "Exp au niveau 100" : "1 059 860",
+            "Points effort" : "+1 Vit.",
+            "Points exp" : "65",
+            "Taux de capture" :	"45",
+            "Éclosion"	: "19"
+        }
+    },
+
+    {
+        "Pokemon21" :
+        {
+            "Nom" : "Carapuce", 
+            "Type" : "Eau",
+            "Espèce" : "Minitortue",
+            "Couleur" : "Bleu",
+            "Taille" : "50 cm",
+            "Poids" : "9 kg",
+            "Pv" : "44",
+            "Speed" : "43",
+            "Attaque" : "48",
+            "Défense" :  "65",
+            "Attaque spé" : "50",
+            "Défense spé" : "64",
+            "Exp au niveau 100" : "1 059 860", 
+            "Points effort" : "+1 Déf.",
+            "Points exp" : "66", 
+            "Taux de capture" : "45",
+            "Éclosion" : "19"
+        }
+    },
+
+    {
+        "Pokemon22" :
+        {
+            "Nom" : "Sabelette",
+            "Éclosion" : "19",
+            "Points effort" : "+1 Déf.",
+            "Points exp." :	"93",
+            "Exp au niveau 100" :	"1 000 000",
+            "Couleur" :	"Jaune",
+            "Taux de capture" :	"255",
+            "Espèce" : "Souris",
+            "Poids"	: "122 kg",
+            "Type"	: "Sol", 
+            "Taille" :	"60  cm",
+            "Pv" : "50",
+            "Attaque" : "75",
+            "Défense" : "85",
+            "Attaque spé" :	"20",
+            "Défense spé" : "30",
+            "Vitesse" : "40"
+        } 
+    },
+
+    {
+        "Pokemon23" :
+        {
+            "Nom" : "Pikachu",
+            "Espèce" : "Souris",
+            "Couleur" :	"Jaune",
+            "Exp au niveau 100" : "1 000 000",
+            "Points effort"	: "+2 Vit.",
+            "Points exp" : "82",
+            "Type" : "Électrik",
+            "Taille" : "40 cm",
+            "Taux de capture" :	"190",
+            "Éclosion" : "9",
+            "Poids" : "6 kg",
+            "Pv" : "35",
+            "Speed" : "90",
+            "Attaque" : "55",
+            "Défense" : "40",
+            "Attaque spé" : "50",
+            "Défense spé" : "50"
+        }
+    }
 ]
-}
-{"Pokemon8" [
-    "Nom" : "Togepi"
-    "Catégorie" :	"Balle Pic" 
-    "Couleur" : "Blanc" 
-    "Exp au niveau 100" :	"800 000" 
-    "Poids" :	"1,5 kg"
-    "Points effort" :	"+1 Déf. Spé" 
-    "Points exp" : "74"
-    "Type" : "Fée" 
-    "Taille" : "30 cm" 
-    "Taux de capture" : "190" 
-    "Éclosion" : "10" ]
-}
-{"Pokemon9" [
-    "Nom" : "Persian" 
-    "Type" : "Normal"
-    "Espèce" : "Chadeville" 
-    "Couleur" : "Jaune"
-    "Taille" : "1 m"
-    "Poids" : "32 kg"
-    "Pv" : "65"
-    "Speed" : "115"
-    "Attaque": "70"
-    "Defense" : "60"
-    "Attaque spé" : "65"
-    "Defense spé" : "65" 
-    "Exp au niveau 100" :	"1 000 000" 
-    "Points effort" :	"+2 Vit." 
-    "Points exp" : "148" 
-    "Taux de capture" : "90" 
-    "Éclosion" : "19" ]
-}
-{"Pokemon10" []
-    "Nom" : "Voltali"
-    "Type" : "Électrik"
-    "Espèce" : "Orage"
-    "Couleur" : "Jaune"
-    "Taille" : "80 cm"
-    "Poids" : "24.5 kg"
-    "Pv" : "65"
-    "Speed" : "130"
-    "Attaque" :  "65"
-    "Défense" : "60"
-    "Attaque spé" : "110"
-    "Défense spé" : "95"
-    "Exp au niveau 100" :	"1 000 000" 
-    "Points effort" :	"+2 Vit." 
-    "Points exp" : "197" 
-    "Taux de capture" : "45" 
-    "Éclosion" : "34" 
-}
-{"Pokemon11" [
-    "Nom" : "Arcanin"
-    "Type" : "Feu"
-    "Espèce" : "Légendaire"
-    "Couleur" : "Marron"
-    "Taille" : "1.9 m"
-    "Poids" : "155 kg"
-    "Pv" : "90"
-    "Speed" : "95"
-    "Attaque" : "110"
-    "Défense" : "80"
-    "Attaque spé" : "100"
-    "Défense spé" : "80"
-    "Exp au niveau 100" :	"1 250 000" 
-    "Points effort" :	"+2 Att." 
-    "Points exp" : "213"
-    "Taux de capture" : "75" 
-    "Éclosion" : "19" ]
-}
-{"Pokemon12" [
-    "Nom" : "Pyroli" 
-    "Type" : "Feu"
-    "Espèce" : "Flamme"
-    "Couleur" : "Rouge"
-    "Taille" : "90 cm"
-    "Poids" : "25 kg"
-    "Pv" : "65"
-    "Speed" : "65"
-    "Attaque" : "130"
-    "Défense" : "60"
-    "Attaque spé" : "95"
-    "Défense spé" : "110"
-    "Exp au niveau 100" :	"1 000 000" 
-    "Points effort" :	"+2 Att." 
-    "Points exp" : "184" 
-    "Taux de capture" : "45" 
-    "Éclosion" : "34" ]
-}
-{"Pokemon13" [
-    "Nom" : "Laggron"
-    "Type": "Eau et Sol"
-    "Espèce" : "PoissonBoue"
-    "Couleur" : "Bleu"
-    "Taille" : "1.5 m"
-    "Poids" : "81.9 kg"
-    "Pv" : "100"
-    "Speed" : "60"
-    "Attaque" : "110"
-    "Défense" : "90"
-    "Attaque spé" : "85"
-    "Défense spé" : "90"
-    "Exp au niveau 100" :	"1 059 860" 
-    "Points effort" :	"+3 Att." 
-    "Points exp" : "210" 
-    "Taux de capture" : "45" 
-    "Éclosion" : "19" ]
-}
-{"Pokemon14" [
-    "Nom" : "Tyranocif"
-    "Type": "Roche Ténèbres"
-    "Espèce" : "Armure"
-    "Couleur" : "Vert"
-    "Taille" : "2 m"
-    "Poids" : "202 kg"
-    "Pv" : "100"
-    "Speed" : "61"
-    "Attaque" : "134"
-    "Défense" : "110"
-    "Attaque spé" : "95"
-    "Défense spé" : "100"
-    "Exp au niveau 100" :	"1 250 000" 
-    "Points effort" :	"+3 Att." 
-    "Points exp" : "218" 
-    "Taux de capture" : "45" 
-    "Éclosion" : "39" ]
-}
-{"Pokemon15" [
-    "Nom" : "Raikou"
-    "Type" : "Électrik"
-    "Espèce" : "Foudre"
-    "Couleur" : "Jaune"
-    "Taille" : "1.9 m"
-    "Poids" : "178 kg"
-    "Pv" : "90"
-    "Speed" : "115"
-    "Attaque" : "85"
-    "Défense" : "75"
-    "Attaque spé" : "115"
-    "Défense spé" : "100"
-    "Exp au niveau 100" :	"1 250 000" 
-    "Points exp" : "216" 
-    "Taux de capture" : "3" 
-    "Éclosion" :	"79" ]
-}
-{"Pokemon16" [
-    "Nom" : "Drattak"
-    "Couleur" : "Bleu" 
-    "Exp au niveau 100" :	"1 250 000" 
-    "Points effort" :	"+3 Att." 
-    "Points exp" : "218" 
-    "Taux de capture" : "45" 
-    "Éclosion" : "39" 
-    "Type" : "Dragon Vol"
-    "Espèce" : "Dragon"
-    "Taille" : "1.5 m"
-    "Poids" : "102.6 kg"
-    "Pv" : "95"
-    "Speed" : "100"
-    "Attaque" : "135"
-    "Défense" : "80"
-    "Attaque spé" : "110"
-    "Défense spé" : "80" ]
-}
-{"Pokemon17" [
-    "Nom" : "Reshiram"
-    "Catégorie" : "Blanc Réel" 
-    "Couleur" : "Blanc" 
-    "Exp au niveau 100" :	"1 250 000" 
-    "Poids" :	"330 kg"
-    "Points effort" : "+3 Att. Spé" 
-    "Points exp" : "306" 
-    "Type" : "Dragon" 
-    "Type" : "Feu" 
-    "Taille" : "3,2 m"
-    "Taux de capture" : "3" 
-    "Éclosion" : "120"
-    "Talent" : "TurboBrasier"
-    "PV" : "100"	
-    "Attaque" : "120"	
-    "Défense" : "100"	
-    "Atq Spé" : "150"	
-    "Déf Spé"	: "120"	
-    "Vitesse"	: "90" ]   
-}
-{"Pokemon18"  [ 
-    "Nom" : "Volcanion"
-    "Catégorie" :	"Vapeur"
-    "Couleur" : "Rouge" 
-    "Exp au niveau 100" :	"1 250 000" 
-    "Poids"	: "195 kg"
-    "Points effort" :	"+3 Attaque Spéciale" 
-    "Points exp" : "270" 
-    "Type" : "Feu" 
-    "Type" : "Eau" 
-    "Taille" : "1,7 m"
-    "Taux de capture" : "3"
-    "Éclosion" : "120" ]
-}
-{"Pokemon19" [
-    "Nom" : "Arceus Électrik"
-    "Type" : "Électrik"
-    "Pv" :	"120"	
-    "Attaque" : "120"	
-    "Défense" : "120"	
-    "Atq Spé" : "120"	
-    "Déf Spé" : "120"	
-    "Vitesse" : "120"	
-    "Catégorie" : "Alpha" 
-    "Couleur" : "Gris Blanc" 
-    "Exp au niveau 100" :	"1 250 000" 
-    "Poids" :	"320 kg"
-    "Points effort" :	"+3 PV" 
-    "Points exp" : "324" 
-    "Taille" : "3,2 m"
-    "Taux de capture" : "3"
-    "Éclosion" : "119" ]
-}
