@@ -1,5 +1,6 @@
-[
-
+[null, 
+    {
+        "Pokemon1":
         {
             "Nom" : "Mew",
             "Type" : "Psy",
@@ -18,9 +19,9 @@
             "Défense" : "100",
             "Attaque spé" : "100",
             "Défense Spé" : "100"
-        
+        } 
     },
-
+    
     {
         "Pokemon2" :
         {
@@ -137,7 +138,7 @@
         }
     },
 
-    {   
+    {
         "Pokemon7" :
         {
             "Nom" : "Persian", 

@@ -1,38 +1,146 @@
 [
-    {
-        "nom": "Eevee",
-        "points_de_vie": 100,
-        "niveau": 5,
-        "puissance_attaque": 20,
-        "defense": 15
-         
-    },
-    {
-        "nom": "Charmander",
-        "points_de_vie": 90,
-        "niveau": 5,
-        "puissance_attaque": 25,
-        "defense": 18
-    },
-    {
-        "nom": "Squirtle",
-        "points_de_vie": 95,
-        "niveau": 5,
-        "puissance_attaque": 23,
-        "defense": 20
-    },
-    {
-        "nom": "Sandshrew",
-        "points_de_vie": 80,
-        "niveau": 5,
-        "puissance_attaque": 22,
-        "defense": 25
-    },
-    {
-        "nom": "Pikachu",
-        "points_de_vie": 88,
-        "niveau": 5,
-        "puissance_attaque": 27,
-        "defense": 16
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  {
+    "Pokemon18": {
+      "Nom": "Bulbizarre",
+      "Type": "Plante Poison",
+      "Taille": "70 cm",
+      "Couleur": "Vert",
+      "Poids": "6,9 kg",
+      "Esp\u00e8ce ": "Graine",
+      "\u00c9closion": "19",
+      "Points effort": "+1 Att. Sp\u00e9",
+      "Points exp.": "64",
+      "Exp au niveau 100": "1 059 860",
+      "Taux de capture": "45",
+      "Pv": "45",
+      "Speed": "45",
+      "Attaque": "49",
+      "D\u00e9fense": "49",
+      "Attaque sp\u00e9": "65",
+      "D\u00e9fense sp\u00e9": "65"
     }
+  },
+  {
+    "Pokemon19": {
+      "Nom": "\u00c9voli",
+      "Type": "Normal",
+      "Couleur": "Marron",
+      "Esp\u00e8ce": "\u00c9volutif",
+      "Exp au niveau 100": "1 000 000",
+      "Poids": "6,5kg",
+      "Points effort": "+1 D\u00e9f. Sp\u00e9",
+      "Points exp": "92",
+      "Taille": "30 cm",
+      "Taux de capture": "45",
+      "\u00c9closion": "34",
+      "Pv": "55",
+      "Speed": "55",
+      "Attaque": "55",
+      "D\u00e9fense": "50",
+      "Attaque sp\u00e9": "45",
+      "D\u00e9fense sp\u00e9": "65"
+    }
+  },
+  {
+    "Pokemon20": {
+      "Nom": "Salam\u00e8che",
+      "Type": "Feu",
+      "ESP\u00c8CE": "L\u00e9zard",
+      "Couleur": "Rouge",
+      "Taille": "60 cm",
+      "Poids": "8.5 kg",
+      "Pv": "39",
+      "Speed": "65",
+      "Attaque": "52",
+      "D\u00e9fense": "43",
+      "Attaque sp\u00e9": "60",
+      "D\u00e9fense sp\u00e9": "50",
+      "Exp au niveau 100": "1 059 860",
+      "Points effort": "+1 Vit.",
+      "Points exp": "65",
+      "Taux de capture": "45",
+      "\u00c9closion": "19"
+    }
+  },
+  {
+    "Pokemon21": {
+      "Nom": "Carapuce",
+      "Type": "Eau",
+      "Esp\u00e8ce": "Minitortue",
+      "Couleur": "Bleu",
+      "Taille": "50 cm",
+      "Poids": "9 kg",
+      "Pv": "44",
+      "Speed": "43",
+      "Attaque": "48",
+      "D\u00e9fense": "65",
+      "Attaque sp\u00e9": "50",
+      "D\u00e9fense sp\u00e9": "64",
+      "Exp au niveau 100": "1 059 860",
+      "Points effort": "+1 D\u00e9f.",
+      "Points exp": "66",
+      "Taux de capture": "45",
+      "\u00c9closion": "19"
+    }
+  },
+  {
+    "Pokemon22": {
+      "Nom": "Sabelette",
+      "\u00c9closion": "19",
+      "Points effort": "+1 D\u00e9f.",
+      "Points exp.": "93",
+      "Exp au niveau 100": "1 000 000",
+      "Couleur": "Jaune",
+      "Taux de capture": "255",
+      "Esp\u00e8ce": "Souris",
+      "Poids": "122 kg",
+      "Type": "Sol",
+      "Taille": "60  cm",
+      "Pv": "50",
+      "Attaque": "75",
+      "D\u00e9fense": "85",
+      "Attaque sp\u00e9": "20",
+      "D\u00e9fense sp\u00e9": "30",
+      "Vitesse": "40"
+    }
+  },
+  {
+    "Pokemon23": {
+      "Nom": "Pikachu",
+      "Esp\u00e8ce": "Souris",
+      "Couleur": "Jaune",
+      "Exp au niveau 100": "1 000 000",
+      "Points effort": "+2 Vit.",
+      "Points exp": "82",
+      "Type": "\u00c9lectrik",
+      "Taille": "40 cm",
+      "Taux de capture": "190",
+      "\u00c9closion": "9",
+      "Poids": "6 kg",
+      "Pv": "35",
+      "Speed": "90",
+      "Attaque": "55",
+      "D\u00e9fense": "40",
+      "Attaque sp\u00e9": "50",
+      "D\u00e9fense sp\u00e9": "50"
+    }
+  }
 ]

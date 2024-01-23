@@ -16,7 +16,7 @@ class Pokedex:
     
     def add_pokemon(self, id_pok: int):
         if isinstance(id_pok, int):
-            with open('pokedex.json', r, encoding='utf-8') as f:
+            with open('pokedex.json', "r", encoding='utf-8') as f:
                 pokdata = json.load(f)
                 self.data[id_pok] = pokdata[id_pok]
             self.save_dex()
@@ -28,5 +28,26 @@ class Pokedex:
 
 if __name__ == '__main__':
     dex = Pokedex()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
