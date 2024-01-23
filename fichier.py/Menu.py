@@ -50,7 +50,7 @@ def Pokemon():
         POKEMON_RECT = POKEMON_TEXT.get_rect(center=(640, 260))
         SCREEN.blit(POKEMON_TEXT, POKEMON_RECT)
 
-        POKEMON_BACK = Button(pos=(640, 460), 
+        POKEMON_BACK = Button(pos=(40, 460), 
                             text_input="BACK", font=get_font(75), base_color="Black", hovering_color="Green")
 
         POKEMON_BACK.changeColor(POKEMON_MOUSE_POS)
