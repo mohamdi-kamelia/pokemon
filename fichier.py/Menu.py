@@ -2,23 +2,31 @@
 import pygame
 import sys
 from button import Button
-from combat import Combat
-from pokedex import Pokedex
-from pokemon import Pokemon
+
+from game import *
+from pokemon import PokemonApp
+
 
 pygame.init()
-
-SCREEN = pygame.display.set_mode((1000, 700))
+SCREEN = pygame.display.set_mode((1000, 800))
 pygame.display.set_caption("Menu")
 
-BG = pygame.image.load("photos/_6326d2ef-150c-49d9-9f30-88edb17c7953.jpg")
+BG = pygame.image.load("photos/_005551e8-0912-4606-bc6e-c497483f9886.jpg")
 
 
 def get_font(size): 
     return pygame.font.Font("photos/font.ttf", size)
-
-
 def Lancer_une_partie():
+    global player_pokemon, rival_pokemon
+
+    # Appeler la fonction start_game de game.py
+    start_game()
+
+    # Réinitialiser les variables globales après le jeu
+    player_pokemon = None
+    rival_pokemon = None
+
+
     while True:
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
 
@@ -46,31 +54,8 @@ def Lancer_une_partie():
 
 
 def Pokemon():
-    while True:
-        POKEMON_MOUSE_POS = pygame.mouse.get_pos()
-
-        SCREEN.fill("white")
-
-        POKEMON_TEXT = get_font(45).render(" ", True, "Black")
-        POKEMON_RECT = POKEMON_TEXT.get_rect(center=(640, 260))
-        SCREEN.blit(POKEMON_TEXT, POKEMON_RECT)
-
-        POKEMON_BACK = Button(pos=(640, 460), 
-                            text_input="BACK", font=get_font(75), base_color="Black", hovering_color="Green")
-
-        POKEMON_BACK.changeColor(POKEMON_MOUSE_POS)
-        POKEMON_BACK.update(SCREEN)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if POKEMON_BACK.checkForInput(POKEMON_MOUSE_POS):
-                    main_menu()
-
-        pygame.display.update()
-
+    pokemon_app = PokemonApp()
+    pokemon_app.run()
 
 def Pokédex():
     while True:
@@ -112,8 +97,8 @@ def main_menu():
         MENU_RECT = MENU_TEXT.get_rect(center=(500, 60))
 
         PLAY_BUTTON = Button(pos=(480, 440), text_input="Lancer une partie", font=get_font(35), base_color="#000000", hovering_color="White")
-        POKEMON_BUTTON = Button(pos=(480, 510), text_input="Accéder au Pokédex ", font=get_font(35), base_color="#000000", hovering_color="White")
-        POKEDEX_BUTTON = Button(pos=(490, 600), text_input="Ajouter un Pokémon ", font=get_font(35), base_color="#000000", hovering_color="White")
+        POKEMON_BUTTON = Button(pos=(480, 510), text_input="Voir les  Pokémons ", font=get_font(35), base_color="#000000", hovering_color="White")
+        POKEDEX_BUTTON = Button(pos=(490, 600), text_input="Accéder au Pokédex ", font=get_font(35), base_color="#000000", hovering_color="White")
         QUIT_BUTTON = Button(pos=(480, 680), text_input="QUIT", font=get_font(40), base_color="#000000", hovering_color="White")
 
         SCREEN.blit(MENU_TEXT, MENU_RECT)
@@ -141,4 +126,3 @@ def main_menu():
 
 if __name__ == "__main__":
     main_menu()
-

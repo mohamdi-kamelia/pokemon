@@ -1,91 +1,86 @@
-# main_gui.py
 import pygame
-from pygame.locals import QUIT, KEYDOWN, K_ESCAPE, MOUSEBUTTONDOWN, K_RETURN
-from pokemon import Pokemon
-from combat import Combat
-from pokedex import Pokedex
+from pygame.locals import QUIT, KEYDOWN, K_RETURN
+import json
+from pok import *
 
-class PokemonGame:
+class PokemonApp:
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((400, 300))
-        pygame.display.set_caption("Pokemon Game")
-
+        self.downloader = PokemonDataDownloader()
+        self.downloader.get_pokemon_data()
+        
+        self.pokemon_list = self.load_pokemon_data()
+        self.selected_index = 0
+        self.selected_pokemon_info = None
+        
+        self.screen = pygame.display.set_mode((800, 600))
+        pygame.display.set_caption("Liste des Pokémon")
         self.clock = pygame.time.Clock()
-        self.font = pygame.font.Font(None, 36)
 
-        self.pokedex = Pokedex()
+    def load_pokemon_data(self):
+        with open('pokemon.json', 'r') as file:
+            pokemon_data = json.load(file)
+        return pokemon_data['pokemon_list']
 
-        # Définir les boutons
-        self.buttons = [
-            {"text": "Lancer une partie", "action": self.start_game, "rect": pygame.Rect(50, 50, 300, 30)},
-            {"text": "Choisir un Pokémon", "action": self.choose_pokemon, "rect": pygame.Rect(50, 100, 300, 30)},
-            {"text": "Accéder au Pokédex", "action": self.display_pokedex, "rect": pygame.Rect(50, 150, 300, 30)},
-            {"text": "Quitter", "action": self.quit_game, "rect": pygame.Rect(50, 200, 300, 30)}
-        ]
+    def load_pokemon_images(self, pokemon_list):
+        images = {}
+        for pokemon_info in pokemon_list:
+            image_path = pokemon_info['image_path']
+            images[pokemon_info['name']] = pygame.image.load(image_path)
+        return images
 
-    def display_menu(self):
+    def draw_pokemon_list(self):
         self.screen.fill((255, 255, 255))
+        pokemon_images = self.load_pokemon_images(self.pokemon_list)
+        font = pygame.font.Font(None, 36)
 
-        for button in self.buttons:
-            pygame.draw.rect(self.screen, (200, 200, 200), button["rect"])
-            text = self.font.render(button["text"], True, (0, 0, 0))
-            text_rect = text.get_rect(center=button["rect"].center)
-            self.screen.blit(text, text_rect)
+        for i, pokemon_info in enumerate(self.pokemon_list):
+            color = (0, 0, 255) if i == self.selected_index else (0, 0, 0)
 
-        pygame.display.flip()
+            image = pokemon_images[pokemon_info['name']]
+            self.screen.blit(image, (50, 50 + i * 50))
 
-    def start_game(self):
-        player_pokemon_name = input("Choisissez un Pokémon pour commencer: ")
-        if not player_pokemon_name:
-            return
+            text = font.render(pokemon_info['name'].capitalize(), True, color)
+            text_y = 50 + i * 50 + image.get_height() / 2 - text.get_height() / 2 + 5
+            self.screen.blit(text, (50 + image.get_width() + 10, text_y))
 
-        player_pokemon = Pokemon(player_pokemon_name)
-        opponent_pokemon_name = "bulbasaur"  # Choisissez un Pokémon arbitraire ici
-        opponent_pokemon = Pokemon(opponent_pokemon_name)
+    def draw_pokemon_info(self):
+        if self.selected_pokemon_info:
+            font = pygame.font.Font(None, 30)
+            text_x = 400
+            text_y = 50
+            keys_to_display = ['name', 'types', 'hp', 'attack', 'defense', 'speed']
 
-        combat = Combat(player_pokemon, opponent_pokemon)
-        combat_result = combat.start_combat()
-
-        print(f"Le gagnant est : {combat_result['winner_name']}")
-        print(f"Dommages infligés à l'adversaire : {combat_result['damage_to_opponent']}")
-        print(f"Dommages subis par le joueur : {combat_result['damage_to_player']}")
-
-        combat.save_to_pokedex(self.pokedex)
-
-    def choose_pokemon(self):
-        # Implémentez la logique pour afficher la page Pokémon ici
-        # Vous pouvez utiliser une nouvelle classe ou une fonction dédiée pour cela
-        print("Page Pokémon : Choisissez votre Pokémon")
-
-    def display_pokedex(self):
-        self.pokedex.display_pokemon()
-
-    def quit_game(self):
-        print("Au revoir !")
-        pygame.quit()
+            for key, value in self.selected_pokemon_info.items():
+                if key in keys_to_display:
+                    text = font.render(f"{key.capitalize()}: {value}", True, pygame.Color('black'))
+                    self.screen.blit(text, (text_x, text_y))
+                    text_y += 30
 
     def run(self):
-        running = True
-        while running:
-            self.display_menu()
-
+        while True:
             for event in pygame.event.get():
-                if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
-                    running = False
-                elif event.type == MOUSEBUTTONDOWN and event.button == 1:
-                    # Vérifier si un bouton a été cliqué
-                    for button in self.buttons:
-                        if button["rect"].collidepoint(event.pos):
-                            button["action"]()
+                if event.type == QUIT:
+                    pygame.quit()
+                    quit()
+                elif event.type == KEYDOWN:
+                    if event.key == K_RETURN:
+                        self.selected_pokemon_info = self.pokemon_list[self.selected_index]
+                    elif event.key == pygame.K_DOWN:
+                        self.selected_index = (self.selected_index + 1) % len(self.pokemon_list)
+                    elif event.key == pygame.K_UP:
+                        self.selected_index = (self.selected_index - 1) % len(self.pokemon_list)
 
+            self.draw_pokemon_list()
+            self.draw_pokemon_info()
+
+            pygame.display.flip()
             self.clock.tick(30)
 
-        pygame.quit()
-
 if __name__ == "__main__":
-    game = PokemonGame()
-    game.run()
+    app = PokemonApp()
+    app.run()
+
 
 
 
