@@ -1,63 +1,56 @@
-# Menu.py
 import pygame
 import sys
 from button import Button
-
-from game import *
+#from game import *
 from pokemon import PokemonApp
-
+from combat import *
 
 pygame.init()
-SCREEN = pygame.display.set_mode((1000, 800))
+SCREEN = pygame.display.set_mode((800, 700))
 pygame.display.set_caption("Menu")
 
 BG = pygame.image.load("photos/_005551e8-0912-4606-bc6e-c497483f9886.jpg")
 
+pokemons = load_pokedex()
 
 def get_font(size): 
     return pygame.font.Font("photos/font.ttf", size)
-def Lancer_une_partie():
-    global player_pokemon, rival_pokemon
 
-    # Appeler la fonction start_game de game.py
-    start_game()
+
+def lancer_ecran_combat():
+    pygame.init()
+
+    largeur_jeu = 800
+    hauteur_jeu = 600
+    taille = (largeur_jeu, hauteur_jeu)
+    jeu = pygame.display.set_mode(taille)
+    pygame.display.set_caption("Combat Pokémon")
+
+    pokemons = load_pokedex()
+    pokemon_joueur = select_pokemon_screen(jeu, pokemons, (255, 255, 255))
+    pokemon_rival = get_random_rival(pokemons, pokemon_joueur)
+
+    combat = CombatGUI(pokemon_joueur, pokemon_rival)
+    combat.demarrer_interface_combat()
+
+    pygame.quit()
+    sys.exit()
+def Lancer_une_partie():
+    global pokemon_joueur, pokemon_rival
+
 
     # Réinitialiser les variables globales après le jeu
-    player_pokemon = None
-    rival_pokemon = None
+    pokemon_joueur = None
+    pokemon_rival = None
 
-
-    while True:
-        PLAY_MOUSE_POS = pygame.mouse.get_pos()
-
-        SCREEN.fill("black")
-
-        PLAY_TEXT = get_font(45).render(" ", True, "White")
-        PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 260))
-        SCREEN.blit(PLAY_TEXT, PLAY_RECT)
-
-        PLAY_BACK = Button(pos=(640, 460), 
-                            text_input="BACK", font=get_font(75), base_color="White", hovering_color="Green")
-
-        PLAY_BACK.changeColor(PLAY_MOUSE_POS)
-        PLAY_BACK.update(SCREEN)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
-                    main_menu()
-
-        pygame.display.update()
-
+    lancer_ecran_combat()
 
 def Pokemon():
     pokemon_app = PokemonApp()
     pokemon_app.run()
 
-def Pokédex():
+
+def Pokedex():
     while True:
         POKEDEX_MOUSE_POS = pygame.mouse.get_pos()
 
@@ -87,19 +80,20 @@ def Pokédex():
 def main_menu():
     while True:
         SCREEN.blit(BG, (0, 0))
-        resized_bg = pygame.transform.scale(BG, (1000, 700))
+        resized_bg = pygame.transform.scale(BG, (800, 700))
 
+        # Centrer l'image redimensionnée
         bg_rect = resized_bg.get_rect(center=(SCREEN.get_width() // 2, SCREEN.get_height() // 2))
         SCREEN.blit(resized_bg, bg_rect)
 
         MENU_MOUSE_POS = pygame.mouse.get_pos()
-        MENU_TEXT = get_font(100).render("  POKEMON  ", True, "#FFD700")
-        MENU_RECT = MENU_TEXT.get_rect(center=(500, 60))
+        MENU_TEXT = get_font(80).render("  POKEMON  ", True, "#FFD700")
+        MENU_RECT = MENU_TEXT.get_rect(center=(400, 60))
 
-        PLAY_BUTTON = Button(pos=(480, 440), text_input="Lancer une partie", font=get_font(35), base_color="#000000", hovering_color="White")
-        POKEMON_BUTTON = Button(pos=(480, 510), text_input="Voir les  Pokémons ", font=get_font(35), base_color="#000000", hovering_color="White")
-        POKEDEX_BUTTON = Button(pos=(490, 600), text_input="Accéder au Pokédex ", font=get_font(35), base_color="#000000", hovering_color="White")
-        QUIT_BUTTON = Button(pos=(480, 680), text_input="QUIT", font=get_font(40), base_color="#000000", hovering_color="White")
+        PLAY_BUTTON = Button(pos=(400, 400), text_input="Lancer une partie", font=get_font(35), base_color="#000000", hovering_color="White")
+        POKEMON_BUTTON = Button(pos=(420, 470), text_input="Voir les  Pokémons ", font=get_font(35), base_color="#000000", hovering_color="White")
+        POKEDEX_BUTTON = Button(pos=(420, 540), text_input="Accéder au Pokédex ", font=get_font(35), base_color="#000000", hovering_color="White")
+        QUIT_BUTTON = Button(pos=(420, 620), text_input="QUIT", font=get_font(40), base_color="#000000", hovering_color="White")
 
         SCREEN.blit(MENU_TEXT, MENU_RECT)
 
@@ -117,7 +111,7 @@ def main_menu():
                 if POKEMON_BUTTON.checkForInput(MENU_MOUSE_POS):
                     Pokemon()
                 if POKEDEX_BUTTON.checkForInput(MENU_MOUSE_POS):
-                    Pokédex()    
+                    Pokedex()
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
                     pygame.quit()
                     sys.exit()

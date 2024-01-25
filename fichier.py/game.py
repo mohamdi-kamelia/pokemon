@@ -1,10 +1,9 @@
 import pygame
 from pygame.locals import QUIT
-from pygame import Rect
-import requests 
-import io 
-from urllib.request import urlopen 
-import random
+import requests
+import io
+from urllib.request import urlopen
+from combat import *
 
 pygame.init()
 
@@ -15,11 +14,6 @@ game = pygame.display.set_mode(size)
 pygame.display.set_caption("Pokemon")
 
 black = (0, 0, 0)
-gold = (218, 165, 32)
-grey = (200, 200, 200)
-green = (0, 200, 0)
-red = (200, 0, 0)
-white = (255, 255, 255)
 K = (129, 178, 154)
 
 base_url = 'https://pokeapi.co/api/v2'
@@ -53,12 +47,6 @@ class Pokemon(pygame.sprite.Sprite):
             if stat['stat']['name'] == 'hp':
                 self.current_hp = stat['base_stat'] + self.niveau
                 self.max_hp = stat['base_stat'] + self.niveau
-            elif stat['stat']['name']  == 'attack':
-                self.attack = stat['base_stat']
-            elif stat['stat']['name'] == 'defense':
-                self.defense = stat['base_stat']
-            elif stat['stat']['name'] == 'speed':
-                self.speed = stat['base_stat']
 
         self.type = []
         for pokemon_type in self.json['types']:
@@ -103,122 +91,19 @@ def select_pokemon_screen():
                 for pokemon in pokemons:
                     if pokemon.get_rect().collidepoint(mouse_cursor):
                         selected_pokemon = pokemon
-                        rival_pokemon = get_random_rival(pokemons, selected_pokemon)
-                        game_status = 'battle'
+                        game_status = 'select_pokemon'
 
         game.fill(K)
 
-        bulbasaur.draw()
-        charmander.draw()
-        squirtle.draw()
-        pikachu.draw()
-        eevee.draw()
-        sandshrew.draw()
-
-        mouse_cursor = pygame.mouse.get_pos()
         for pokemon in pokemons:
+            pokemon.draw()
+            mouse_cursor = pygame.mouse.get_pos()
             if pokemon.get_rect().collidepoint(mouse_cursor):
                 pygame.draw.rect(game, black, pokemon.get_rect(), 2)
 
         pygame.display.update()
 
     return selected_pokemon
-def get_random_rival(pokemons, player_pokemon):
-    # Choisir un Pokémon aléatoire qui n'est pas le Pokémon du joueur
-    rival_options = [p for p in pokemons if p != player_pokemon]
-    return random.choice(rival_options)
-
-def battle_screen(player_pokemon, rival_pokemon):
-    game_status = 'battle'
-    player_turn = True  # Indique si c'est le tour du joueur
-
-    while game_status == 'battle':
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                game_status = 'quit'
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                if player_turn:
-                    # Logique des actions du joueur
-                    mouse_x, mouse_y = event.pos
-
-                    # Supposez que vous ayez des boutons pour différentes attaques
-                    attack_button_rect = pygame.Rect(50, 500, 150, 50)
-                    if attack_button_rect.collidepoint(mouse_x, mouse_y):
-                        # Exécutez l'attaque du joueur
-                        damage = calculate_damage(player_pokemon, rival_pokemon)
-                        apply_damage(rival_pokemon, damage)
-
-                        # Vérifiez s'il y a un vainqueur
-                        winner = determine_winner(player_pokemon, rival_pokemon)
-                        if winner:
-                            print(f"{winner} a gagné le combat!")
-                            record_in_pokedex(player_pokemon, rival_pokemon)
-                            game_status = 'select_pokemon'  # Retour à l'écran de sélection après le combat
-
-                        player_turn = False  # Passer au tour du rival
-
-        # Dessinez l'écran de combat ici
-        draw_battle_screen(player_pokemon, rival_pokemon, player_turn)
-        pygame.display.flip()
-    pygame.quit()
-
-def calculate_damage(attacker, defender):
-    # Logique pour calculer les dégâts en fonction des attributs des Pokémon
-    damage = attacker.puissance_attaque - defender.defense
-    return max(damage, 0)  # Les dégâts ne peuvent pas être négatifs
-
-def apply_damage(pokemon, damage):
-    # Logique pour appliquer les dégâts au Pokémon
-    pokemon.points_de_vie -= damage
-
-def determine_winner(player_pokemon, rival_pokemon):
-    # Logique pour déterminer le vainqueur du combat
-    if player_pokemon.points_de_vie <= 0:
-        return "Le Pokémon rival"
-    elif rival_pokemon.points_de_vie <= 0:
-        return "Le Pokémon joueur"
-    return None  # Le combat continue
-
-def record_in_pokedex(player_pokemon, rival_pokemon):
-    # Logique pour enregistrer le Pokémon rencontré dans le Pokédex du joueur
-    if player_pokemon not in player_pokemon.pokedex:
-        player_pokemon.pokedex.append(player_pokemon)
-        print(f"{player_pokemon.nom} ajouté au Pokédex!")
-
-def draw_battle_screen(player_pokemon, rival_pokemon, player_turn):
-    # Effacer l'écran
-    game.fill(white)
-
-    # Dessiner les images des Pokémon
-    player_pokemon.draw()
-    rival_pokemon.draw()
-
-    # Dessiner les barres de vie
-    draw_health_bar(player_pokemon, (50, 550))
-    draw_health_bar(rival_pokemon, (400, 50))
-
-    # Afficher le texte du tour
-    font = pygame.font.Font(None, 36)
-    if player_turn:
-        text = font.render("C'est votre tour!", True, black)
-    else:
-        text = font.render("Tour du Pokémon rival", True, black)
-
-    game.blit(text, (50, 500))
-
-    # Mettre à jour l'affichage
-    pygame.display.update()
-
-def draw_health_bar(pokemon, position):
-    # Dessiner une barre de vie en fonction des points de vie du Pokémon
-    bar_width = 200
-    bar_height = 20
-    health_ratio = pokemon.points_de_vie / pokemon.max_hp
-    health_bar_width = int(bar_width * health_ratio)
-
-    pygame.draw.rect(game, green, (*position, bar_width, bar_height))
-    pygame.draw.rect(game, red, (*position, bar_width - health_bar_width, bar_height))
-
 
 # Positions x et y pour l'affichage des Pokémon
 x_bulbasaur, y_bulbasaur = 50, 50
@@ -227,6 +112,12 @@ x_squirtle, y_squirtle = 350, 50
 x_pikachu, y_pikachu = 500, 50
 x_sandshrew, y_sandshrew = 50, 250
 x_eevee, y_eevee = 200, 250
+x_gengar, y_gengar = 350, 250
+x_ivysaur, y_ivysaur = 500, 250
+x_onix, y_onix = 50, 450
+x_staryu, y_staryu = 200, 450
+x_voltorb, y_voltorb = 350, 450
+x_wartortle, y_wartortle = 500, 450
 
 bulbasaur = Pokemon('Bulbasaur', 100, 30, 25, 15, ['Type1', 'Type2'], x_bulbasaur, y_bulbasaur)
 charmander = Pokemon('Charmander', 90, 30, 25, 18, ['Type1', 'Type2'], x_charmander, y_charmander)
@@ -234,24 +125,30 @@ squirtle = Pokemon('Squirtle', 95, 30, 23, 20, ['Type1', 'Type2'], x_squirtle, y
 pikachu = Pokemon('Pikachu', 85, 30, 30, 15, ['Type1'], x_pikachu, y_pikachu)
 sandshrew = Pokemon('Sandshrew', 95, 30, 20, 25, ['Type1'], x_sandshrew, y_sandshrew)
 eevee = Pokemon('Eevee', 80, 30, 20, 20, ['Type1'], x_eevee, y_eevee)
-pokemons = [bulbasaur, charmander, squirtle, pikachu, sandshrew, eevee]
+gengar = Pokemon('Gengar', 110, 35, 28, 22, ['Type1', 'Type2'], x_gengar, y_gengar)
+ivysaur = Pokemon('Ivysaur', 105, 32, 26, 17, ['Type1', 'Type2'], x_ivysaur, y_ivysaur)
+onix = Pokemon('Onix', 120, 40, 20, 30, ['Type1', 'Type2'], x_onix, y_onix)
+staryu = Pokemon('Staryu', 90, 28, 35, 15, ['Type1'], x_staryu, y_staryu)
+voltorb = Pokemon('Voltorb', 88, 30, 25, 28, ['Type1'], x_voltorb, y_voltorb)
+wartortle = Pokemon('Wartortle', 98, 35, 30, 22, ['Type1'], x_wartortle, y_wartortle)
+pokemons = [bulbasaur, charmander, squirtle, pikachu, sandshrew, eevee, gengar, ivysaur, onix, staryu, voltorb, wartortle]
+
 def start_game():
-    global player_pokemon, rival_pokemon
+    global player_pokemon, rival_pokemon , game_status
+    game_status = 'select_pokemon'
     player_pokemon = select_pokemon_screen()
     rival_pokemon = get_random_rival(pokemons, player_pokemon)
-    battle_screen(player_pokemon, rival_pokemon)
 
-    while game_status != 'quit':
-            for event in pygame.event.get():
-                if event.type == QUIT:
-                    game_status = 'quit'
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                game_status = 'quit'
 
-            if game_status == 'select_pokemon':
-                player_pokemon = select_pokemon_screen()
-                rival_pokemon = get_random_rival(pokemons, player_pokemon)
-                game_status = 'battle'
-            elif game_status == 'battle':
-                battle_screen(player_pokemon, rival_pokemon)
-                game_status = 'select_pokemon'
+        if game_status == 'select_pokemon':
+            player_pokemon = select_pokemon_screen()
+            rival_pokemon = get_random_rival(pokemons, player_pokemon)
+            game_status = 'select_pokemon'
+
+        pygame.display.flip()
+
     pygame.quit()
-
