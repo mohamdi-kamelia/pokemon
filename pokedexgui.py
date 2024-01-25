@@ -13,7 +13,7 @@ screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Pokédex")
 
 
-background = pygame.image.load("Imagepokemon/pokedex.jpg")
+background = pygame.image.load("Imagepokemon/Pokedex.jpg")
 background = pygame.transform.scale(background, (width, height))
 
 #Couleurs
