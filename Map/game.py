@@ -31,7 +31,7 @@ class Game:
 
 
         # dessiner le groupe de calques
-        self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=5)
+        self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=6)
         self.group.add(self.player)
 
 

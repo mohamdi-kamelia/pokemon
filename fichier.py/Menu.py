@@ -97,10 +97,10 @@ def main_menu():
         MENU_TEXT = get_font(100).render("  POKEMON  ", True, "#FFD700")
         MENU_RECT = MENU_TEXT.get_rect(center=(500, 60))
 
-        PLAY_BUTTON = Button(pos=(480, 440), text_input="Lancer une partie", font=get_font(35), base_color="#000000", hovering_color="White")
-        POKEMON_BUTTON = Button(pos=(480, 510), text_input="Voir les  Pokémons ", font=get_font(35), base_color="#000000", hovering_color="White")
-        POKEDEX_BUTTON = Button(pos=(490, 600), text_input="Accéder au Pokédex ", font=get_font(35), base_color="#000000", hovering_color="White")
-        QUIT_BUTTON = Button(pos=(480, 680), text_input="QUIT", font=get_font(40), base_color="#000000", hovering_color="White")
+        PLAY_BUTTON = Button(pos=(480, 440), text_input="Lancer une partie", font=get_font(45), base_color="#000000", hovering_color="White")
+        POKEMON_BUTTON = Button(pos=(480, 510), text_input="Voir les  Pokémons ", font=get_font(45), base_color="#000000", hovering_color="White")
+        POKEDEX_BUTTON = Button(pos=(490, 600), text_input="Accéder au Pokédex ", font=get_font(45), base_color="#000000", hovering_color="White")
+        QUIT_BUTTON = Button(pos=(480, 680), text_input="QUIT", font=get_font(60), base_color="#000000", hovering_color="White")
 
         SCREEN.blit(MENU_TEXT, MENU_RECT)
 
