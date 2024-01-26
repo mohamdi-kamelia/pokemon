@@ -13,7 +13,7 @@ class PokemonApp:
         self.selected_index = 0
         self.selected_pokemon_info = None
 
-        self.screen = pygame.display.set_mode((800, 600))
+        self.screen = pygame.display.set_mode((800, 700))
         pygame.display.set_caption("Liste des Pokémon")
         self.clock = pygame.time.Clock()
 
@@ -92,8 +92,6 @@ class PokemonApp:
 if __name__ == "__main__":
     app = PokemonApp()
     app.run()
-
-
 
 
 
