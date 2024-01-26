@@ -13,7 +13,7 @@ class Game:
         pygame.display.set_caption('Pokemon')
 
         # charger la carte ( tmx )
-        tmx_data = pytmx.util_pygame.load_pygame('Map.py/carte.tmx')
+        tmx_data = pytmx.util_pygame.load_pygame('Map/carte.tmx')
         map_data = pyscroll.data.TiledMapData(tmx_data)
         map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
         map_layer.zoom = 1
@@ -61,7 +61,7 @@ class Game:
     def switch_house(self):
 
         # charger la carte (tmx)
-        tmx_data = pytmx.util_pygame.load_pygame("Map.py/house.tmx")
+        tmx_data = pytmx.util_pygame.load_pygame("Map/house.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
         map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
         map_layer.zoom = 1
@@ -88,7 +88,7 @@ class Game:
         self.player.position[1] = spawn_house_point.y - 30
     def switch_world(self):
         # charger la carte (tmx)
-        tmx_data = pytmx.util_pygame.load_pygame("Map.py/carte.tmx")
+        tmx_data = pytmx.util_pygame.load_pygame("Map/carte.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
         map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
         map_layer.zoom = 1

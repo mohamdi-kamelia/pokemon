@@ -6,7 +6,7 @@ class Player(pygame.sprite.Sprite):
     
     def __init__(self, x, y):
         super().__init__()
-        self.sprite__sheet = pygame.image.load('Map.py/player.png')
+        self.sprite__sheet = pygame.image.load('Map/player.png')
         self.image = self.get_image(0,0)
         self.image.set_colorkey([0, 0, 0]) # pour enlever le color de l'arrier player
         self.rect = self.image.get_rect()
