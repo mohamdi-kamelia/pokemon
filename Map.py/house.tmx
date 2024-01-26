@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="21">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="23">
  <tileset firstgid="1" source="house3.tsx"/>
  <tileset firstgid="1189" source="house2.tsx"/>
  <layer id="1" name="floor" width="30" height="30">
@@ -120,9 +120,8 @@
   <object id="14" type="collision" x="357.005" y="125.13" width="37.954" height="23.7213"/>
   <object id="15" type="collision " x="67.0126" y="417.494" width="44.4774" height="14.2328"/>
   <object id="16" type="collision" x="172.572" y="400.89" width="13.6397" height="24.3143"/>
-  <object id="18" type="collision" x="48.6286" y="433.506" width="383.692" height="13.6397"/>
-  <object id="19" name="exit_house" x="125.13" y="400.297" width="31.4307" height="31.4307"/>
-  <object id="20" name="spawn_house" x="141.735" y="393.18">
+  <object id="21" name="exit_house" x="118.013" y="400.297" width="40.3262" height="32.6168"/>
+  <object id="22" name="spawn_house" x="138.176" y="395.552">
    <point/>
   </object>
  </objectgroup>
