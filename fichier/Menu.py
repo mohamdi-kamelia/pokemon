@@ -6,6 +6,7 @@ from pokemon import PokemonApp
 from combat import *
 
 
+
 pygame.init()
 SCREEN = pygame.display.set_mode((800, 700))
 pygame.display.set_caption("Menu")
