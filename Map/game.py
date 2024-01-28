@@ -10,6 +10,7 @@ class Game:
         self.map = 'world'
         # creer la fenetre du jeu 
         self.screen = pygame.display.set_mode((800, 600))
+        
         pygame.display.set_caption('Pokemon')
 
         # charger la carte ( tmx )
