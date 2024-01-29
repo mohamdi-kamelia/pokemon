@@ -2,13 +2,12 @@ import pygame
 import sys
 from button import Button
 from game import *
+from game1 import Game
 from pokemon import PokemonApp
-from combat import *
-
 
 
 pygame.init()
-SCREEN = pygame.display.set_mode((800, 700))
+SCREEN = pygame.display.set_mode((1000, 800))
 pygame.display.set_caption("Menu")
 
 BG = pygame.image.load("photos/_005551e8-0912-4606-bc6e-c497483f9886.jpg")
@@ -20,41 +19,59 @@ def get_font(size):
 def Lancer_une_partie():
     global player_pokemon, rival_pokemon
 
+    # Appeler la fonction start_game de game.py
+    start_game()
 
-def lancer_ecran_combat():
-    pygame.init()
+    # Réinitialiser les variables globales après le jeu
+    player_pokemon = None
+    rival_pokemon = None
 
-    largeur_jeu = 800
-    hauteur_jeu = 600
-    taille = (largeur_jeu, hauteur_jeu)
-    jeu = pygame.display.set_mode(taille)
-    pygame.display.set_caption("Combat Pokémon")
 
-    pokemons = load_pokedex()
-    pokemon_joueur = select_pokemon_screen(jeu, pokemons, (255, 255, 255))
-    pokemon_rival = get_random_rival(pokemons, pokemon_joueur)
+    while True:
+        PLAY_MOUSE_POS = pygame.mouse.get_pos()
 
-    combat = CombatGUI(pokemon_joueur, pokemon_rival)
-    combat.demarrer_interface_combat()
+        SCREEN.fill("black")
 
-    pygame.quit()
-    sys.exit()
+        PLAY_TEXT = get_font(45).render(" ", True, "White")
+        PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 260))
+        SCREEN.blit(PLAY_TEXT, PLAY_RECT)
+
+        PLAY_BACK = Button(pos=(640, 460), 
+                            text_input="BACK", font=get_font(75), base_color="White", hovering_color="Green")
+
+        PLAY_BACK.changeColor(PLAY_MOUSE_POS)
+        PLAY_BACK.update(SCREEN)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
+                    main_menu()
+
+        pygame.display.update()
+
 def Lancer_une_partie():
-    global pokemon_joueur, pokemon_rival
+    game = Game()
+    game.run()
+
+
+    #global pokemon_joueur, pokemon_rival
 
 
     # Réinitialiser les variables globales après le jeu
-    pokemon_joueur = None
-    pokemon_rival = None
+    #pokemon_joueur = None
+    #pokemon_rival = None
 
-    lancer_ecran_combat()
+    #lancer_ecran_combat()
 
 def Pokemon():
     pokemon_app = PokemonApp()
     pokemon_app.run()
 
 
-def Pokedex():
+def Pokédex():
     while True:
         POKEDEX_MOUSE_POS = pygame.mouse.get_pos()
 
@@ -84,7 +101,7 @@ def Pokedex():
 def main_menu():
     while True:
         SCREEN.blit(BG, (0, 0))
-        resized_bg = pygame.transform.scale(BG, (800, 700))
+        resized_bg = pygame.transform.scale(BG, (1000, 700))
 
         # Centrer l'image redimensionnée
         bg_rect = resized_bg.get_rect(center=(SCREEN.get_width() // 2, SCREEN.get_height() // 2))
@@ -116,7 +133,7 @@ def main_menu():
                 if POKEMON_BUTTON.checkForInput(MENU_MOUSE_POS):
                     Pokemon()
                 if POKEDEX_BUTTON.checkForInput(MENU_MOUSE_POS):
-                    Pokedex()
+                    Pokédex()
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
                     pygame.quit()
                     sys.exit()
