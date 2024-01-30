@@ -34,7 +34,7 @@ class CombatGUI:
 
     def draw_battle_screen(self):
         self.game_display.blit(self.background_image, (0, 0))  
-        self.draw_pokemon(self.player_pokemon, 100, 400) 
+        self.draw_pokemon(self.player_pokemon, 100, 400)   
         self.draw_health_bar(self.player_pokemon, 100, 380)  
         self.draw_pokemon(self.rival_pokemon, 500, 200)  
         self.draw_health_bar(self.rival_pokemon, 500, 180)  
