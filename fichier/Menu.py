@@ -55,7 +55,7 @@ def Lancer_une_partie():
 def Lancer_une_partie():
     game = Game()
     game.run()
-
+  
 
 def Pokemon():
     pokemon_app = PokemonApp()
