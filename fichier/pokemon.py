@@ -3,6 +3,7 @@ from pygame.locals import QUIT, KEYDOWN, K_RETURN
 import json
 from pok import *
 
+
 class PokemonApp:
     def __init__(self):
         pygame.init()
@@ -20,6 +21,7 @@ class PokemonApp:
         # Charger l'image d'arrière-plan
         self.background_image = pygame.image.load('photos/_5b7894b6-a498-45f7-9d9b-3a664b262059.jpg')
         self.font = pygame.font.Font('photos/Pokemon Solid.ttf', 30)
+
 
 
     def load_pokemon_data(self):
@@ -82,12 +84,18 @@ class PokemonApp:
                         self.selected_index = (self.selected_index + 1) % len(self.pokemon_list)
                     elif event.key == pygame.K_UP:
                         self.selected_index = (self.selected_index - 1) % len(self.pokemon_list)
+                    elif event.type == KEYDOWN:
+                        if event.key == pygame.K_BACKSPACE:    
+                        #if event.key == pygame.K_ESCAPE:
+                            return  # Retour à la page de menu
+    
 
             self.draw_pokemon_list()
             self.draw_pokemon_info()
 
             pygame.display.flip()
             self.clock.tick(30)
+
 
 
 
