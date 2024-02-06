@@ -4,6 +4,7 @@ import io
 from urllib.request import urlopen
 import json
 import random
+import time
 
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -32,38 +33,55 @@ class CombatGUI:
         rect_width = int(pokemon.points_de_vie / pokemon.max_points_de_vie * 100)
         pygame.draw.rect(self.game_display, (0, 255, 0), [x, y, rect_width, 10])
 
+    def draw_health_text(self, pokemon, x, y):
+        font = pygame.font.SysFont(None, 24)
+        text_surface = font.render(f"PV: {pokemon.points_de_vie}/{pokemon.max_points_de_vie}", True, white)
+        self.game_display.blit(text_surface, (x, y))
+
     def draw_battle_screen(self):
         self.game_display.blit(self.background_image, (0, 0))  
         self.draw_pokemon(self.player_pokemon, 100, 400)   
         self.draw_health_bar(self.player_pokemon, 100, 380)  
+        self.draw_health_text(self.player_pokemon, 100, 360)  # Affichage des PV du joueur
         self.draw_pokemon(self.rival_pokemon, 500, 200)  
         self.draw_health_bar(self.rival_pokemon, 500, 180)  
+        self.draw_health_text(self.rival_pokemon, 500, 160)  # Affichage des PV du rival
         pygame.display.update()
+
+    def draw_text(self, text, x, y, color=(255, 255, 255)):
+        font = pygame.font.SysFont(None, 24)
+        text_surface = font.render(text, True, color)
+        self.game_display.blit(text_surface, (x, y))
 
     def start_battle_gui(self):
         print("Un combat commence!")
         clock = pygame.time.Clock()
+        player_turn = True  # Détermine si c'est le tour du joueur
 
         while True:
             self.handle_events()
-            player_damage = self.calculate_damage(self.player_pokemon, self.rival_pokemon)
-            rival_damage = self.calculate_damage(self.rival_pokemon, self.player_pokemon)
 
-            self.apply_damage(self.rival_pokemon, player_damage)
-            self.apply_damage(self.player_pokemon, rival_damage)
+            if player_turn:
+                player_damage = self.calculate_damage(self.player_pokemon, self.rival_pokemon)
+                self.apply_damage(self.rival_pokemon, player_damage)
+                self.draw_text(f"{self.player_pokemon.nom} inflige {player_damage} dégâts à {self.rival_pokemon.nom}", 10, 10)
+                time.sleep(1)  # Pause pour que le joueur puisse voir les dégâts infligés
+            else:
+                rival_damage = self.calculate_damage(self.rival_pokemon, self.player_pokemon)
+                self.apply_damage(self.player_pokemon, rival_damage)
+                self.draw_text(f"{self.rival_pokemon.nom} inflige {rival_damage} dégâts à {self.player_pokemon.nom}", 10, 30)
+                time.sleep(1)  # Pause pour que le joueur puisse voir les dégâts infligés
 
             self.draw_battle_screen()
 
-            print(f"{self.player_pokemon.nom} inflige {player_damage} dégâts à {self.rival_pokemon.nom}")
-            print(f"{self.rival_pokemon.nom} inflige {rival_damage} dégâts à {self.player_pokemon.nom}")
-
             if self.player_pokemon.points_de_vie <= 0 or self.rival_pokemon.points_de_vie <= 0:
                 winner = self.determine_winner()
-                print(f"{winner} a gagné le combat!")
+                self.draw_text(f"{winner} a gagné le combat!", 10, 50)
                 self.record_in_pokedex()
                 pygame.quit()
                 quit()
 
+            player_turn = not player_turn  # Passage au tour suivant
             clock.tick(1)
 
     def handle_events(self):
@@ -71,24 +89,11 @@ class CombatGUI:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    self.player_attack()
-
-    def player_attack(self):
-        print(f"{self.player_pokemon.nom} utilise une attaque spéciale!")
-        special_damage = self.calculate_special_damage(self.player_pokemon, self.rival_pokemon)
-        self.apply_damage(self.rival_pokemon, special_damage)
 
     def calculate_damage(self, attacker, defender):
         type_multiplier = self.get_type_multiplier(attacker, defender)
         damage = int(attacker.puissance_attaque * type_multiplier) - defender.defense
         return max(damage, 0)
-
-    def calculate_special_damage(self, attacker, defender):
-        type_multiplier = self.get_type_multiplier(attacker, defender)
-        special_damage = int(attacker.puissance_attaque * type_multiplier * 1.5) - defender.defense
-        return max(special_damage, 0)
 
     def get_type_multiplier(self, attacker, defender):
         type_multiplier_table = {
@@ -227,6 +232,3 @@ def select_pokemon_screen(game, pokemons, K):
 
 if __name__ == "__main__":
     main()
-
-
-

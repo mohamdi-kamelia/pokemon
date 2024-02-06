@@ -3,9 +3,11 @@ class Button:
         self.pos = pos
         self.text_input = text_input
         self.font = font
-        self.base_color, self.hovering_color = base_color, hovering_color
+        self.base_color = base_color
+        self.hovering_color = hovering_color
         self.text = self.font.render(self.text_input, True, self.base_color)
         self.rect = self.text.get_rect(center=self.pos)
+
 
     def update(self, window):
         window.blit(self.text, self.rect)

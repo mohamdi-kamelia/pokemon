@@ -9,8 +9,6 @@ from pygame.locals import K_UP, K_DOWN, K_LEFT, K_RIGHT
 
 class Game:
     def __init__(self):
-
-        
         # creer la fenetre du jeu 
         self.screen = pygame.display.set_mode((800, 600))
         pygame.display.set_caption('Pokemon')
