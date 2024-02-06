@@ -57,15 +57,6 @@ def Lancer_une_partie():
     game.run()
 
 
-    #global pokemon_joueur, pokemon_rival
-
-
-    # Réinitialiser les variables globales après le jeu
-    #pokemon_joueur = None
-    #pokemon_rival = None
-
-    #lancer_ecran_combat()
-
 def Pokemon():
     pokemon_app = PokemonApp()
     pokemon_app.run()
