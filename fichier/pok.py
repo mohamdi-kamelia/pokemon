@@ -5,7 +5,7 @@ import os
 class PokemonDataDownloader:
     def __init__(self):
         self.base_url = 'https://pokeapi.co/api/v2/pokemon/'
-        self.pokemon_numbers = [ 100, 1, 4, 7, 27, 25, 133 , 8 , 120 , 2 , 94]
+        self.pokemon_numbers = [ 100, 1, 4, 7, 27, 25, 133 , 8 , 120 , 2 , 94 ,29]
         self.pokemon_list = []
 
         # Créez un dossier pour stocker les images localement
