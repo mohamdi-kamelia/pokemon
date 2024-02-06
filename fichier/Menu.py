@@ -2,7 +2,7 @@ import pygame
 import sys
 from button import Button
 from game import *
-from game1 import Game
+#from game1 import Game
 from pokemon import PokemonApp
 
 
@@ -19,7 +19,7 @@ def get_font(size):
 def Lancer_une_partie():
     global player_pokemon, rival_pokemon
 
-    # Appeler la fonction start_game de game.py
+   
     start_game()
 
     # Réinitialiser les variables globales après le jeu
