@@ -7,6 +7,7 @@ from game import *
 from pokemon import PokemonApp
 
 
+
 pygame.init()
 SCREEN = pygame.display.set_mode((1000, 800))
 pygame.display.set_caption("Menu")
@@ -15,7 +16,7 @@ BG = pygame.image.load("photos/_005551e8-0912-4606-bc6e-c497483f9886.jpg")
 
 
 def get_font(size): 
-    return pygame.font.Font("photos/font.ttf", size)
+    return pygame.font.Font("photos/Pokemon Solid.ttf", size)
 def Lancer_une_partie():
     global player_pokemon, rival_pokemon
 
