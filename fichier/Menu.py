@@ -2,7 +2,7 @@ import pygame
 import sys
 from button import Button
 from game import *
-#from game1 import Game
+from game1 import Game
 from pokemon import PokemonApp
 
 
