@@ -120,7 +120,10 @@ class Game:
         # Afficher un bouton pour démarrer le combat
         button_font = pygame.font.Font("photos/Pokemon Solid.ttf", 45)
         button_text = button_font.render("Start Combat", True, (255, 215, 0))
-        button_rect = button_text.get_rect(center=(400, 300))
+        button_rect = button_text.get_rect(center=(500, 400))
+        button_font = pygame.font.Font("photos/Pokemon Solid.ttf", 45)
+        return_button_text = button_font.render("Return to Map", True, (255, 215, 0))
+        return_button_rect = return_button_text.get_rect(center=(500, 500))
 
         while True:
             for event in pygame.event.get():
@@ -131,13 +134,13 @@ class Game:
                     mouse_pos = pygame.mouse.get_pos()
                     if button_rect.collidepoint(mouse_pos):
                         self.start_combat() 
-                    elif event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_BACKSPACE:    
-                        #if event.key == pygame.K_ESCAPE:
-                            return  # Retour à la page de menu    
+                    elif return_button_rect.collidepoint(mouse_pos):
+                        return  # Retour à la carte
+      
 
             self.screen.fill((129, 178, 154))
             self.screen.blit(button_text, button_rect)
+            self.screen.blit(return_button_text, return_button_rect)
             pygame.display.flip()
         
     def start_combat(self):
