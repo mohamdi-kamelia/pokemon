@@ -4,6 +4,7 @@ from button import Button
 from game import *
 from game1 import Game
 from pokemon import PokemonApp
+from combat import *
 
 
 pygame.init()
