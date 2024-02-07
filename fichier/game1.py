@@ -10,7 +10,7 @@ from pygame.locals import K_UP, K_DOWN, K_LEFT, K_RIGHT
 class Game:
     def __init__(self):
         # creer la fenetre du jeu 
-        self.screen = pygame.display.set_mode((800, 600))
+        self.screen = pygame.display.set_mode((1000, 800))
         pygame.display.set_caption('Pokemon')
 
         self.map = 'world'
@@ -56,7 +56,8 @@ class Game:
             self.player.change_animation('left')
         elif pressed[pygame.K_RIGHT]:
             self.player.move_right()
-            self.player.change_animation('right')    
+            self.player.change_animation('right') 
+               
 
     def switch_house(self):
 
@@ -169,7 +170,6 @@ class Game:
         for sprite in self.group.sprites():
             if sprite.feet.collidelist(self.walls) > -1:
                 sprite.move_back() # revenir a position avent le déplassemant
-
 
     def run(self):
         clock = pygame.time.Clock()
