@@ -68,22 +68,22 @@ class CombatGUI:
             self.handle_events()
 
             if player_turn:
-                player_damage = self.calculate_damage(self.player_pokemon, self.rival_pokemon)
-                self.apply_damage(self.rival_pokemon, player_damage)
+                player_damage = CombatGUI.calculate_damage(self.player_pokemon, self.rival_pokemon)
+                CombatGUI.apply_damage(self.rival_pokemon, player_damage)
                 self.draw_text(f"{self.player_pokemon.nom} inflige {player_damage} dégâts à {self.rival_pokemon.nom}", 10, 10)
                 time.sleep(1)  # Pause pour que le joueur puisse voir les dégâts infligés
             else:
-                rival_damage = self.calculate_damage(self.rival_pokemon, self.player_pokemon)
-                self.apply_damage(self.player_pokemon, rival_damage)
+                rival_damage = CombatGUI.calculate_damage(self.rival_pokemon, self.player_pokemon)
+                CombatGUI.apply_damage(self.player_pokemon, rival_damage)
                 self.draw_text(f"{self.rival_pokemon.nom} inflige {rival_damage} dégâts à {self.player_pokemon.nom}", 10, 30)
                 time.sleep(1)  # Pause pour que le joueur puisse voir les dégâts infligés
 
             self.draw_battle_screen()
 
             if self.player_pokemon.points_de_vie <= 0 or self.rival_pokemon.points_de_vie <= 0:
-                winner = self.determine_winner()
+                winner = CombatGUI.determine_winner(self.player_pokemon, self.rival_pokemon)
                 self.draw_text(f"{winner} a gagné le combat!", 10, 50)
-                self.record_in_pokedex()
+                CombatGUI.record_in_pokedex(self.player_pokemon)
                 pygame.quit()
                 quit()
 
@@ -96,12 +96,14 @@ class CombatGUI:
                 pygame.quit()
                 quit()
 
-    def calculate_damage(self, attacker, defender):
-        type_multiplier = self.get_type_multiplier(attacker, defender)
+    @staticmethod
+    def calculate_damage(attacker, defender):
+        type_multiplier = CombatGUI.get_type_multiplier(attacker, defender)
         damage = int(attacker.puissance_attaque * type_multiplier) - defender.defense
         return max(damage, 0)
 
-    def get_type_multiplier(self, attacker, defender):
+    @staticmethod
+    def get_type_multiplier(attacker, defender):
         type_multiplier_table = {
             "Feu": {"Eau": 0.5, "Terre": 2.0, "Feu": 1.0, "Normal": 1},
             "Eau": {"Eau": 1.0, "Terre": 0.5, "Feu": 2.0, "Normal": 1},
@@ -121,21 +123,24 @@ class CombatGUI:
 
         return type_multiplier
 
-    def apply_damage(self, pokemon, damage):
+    @staticmethod
+    def apply_damage(pokemon, damage):
         pokemon.points_de_vie -= damage
 
-    def determine_winner(self):
-        if self.player_pokemon.points_de_vie <= 0:
-            return self.rival_pokemon.nom
-        elif self.rival_pokemon.points_de_vie <= 0:
-            return self.player_pokemon.nom
+    @staticmethod
+    def determine_winner(player_pokemon, rival_pokemon):
+        if player_pokemon.points_de_vie <= 0:
+            return rival_pokemon.nom
+        elif rival_pokemon.points_de_vie <= 0:
+            return player_pokemon.nom
         else:
             return "Aucun vainqueur"
 
-    def record_in_pokedex(self):
-        if self.player_pokemon not in self.player_pokemon.pokedex:
-            self.player_pokemon.pokedex.append(self.player_pokemon)
-            print(f"{self.player_pokemon.nom} ajouté au Pokédex!")
+    @staticmethod
+    def record_in_pokedex(pokemon):
+        if pokemon not in pokemon.pokedex:
+            pokemon.pokedex.append(pokemon)
+            print(f"{pokemon.nom} ajouté au Pokédex!")
 
 class choix(pygame.sprite.Sprite):
     def __init__(self, nom, points_de_vie, niveau, puissance_attaque, defense, types, x, y):
@@ -238,3 +243,4 @@ def select_pokemon_screen(game, pokemons, K):
 
 if __name__ == "__main__":
     main()
+

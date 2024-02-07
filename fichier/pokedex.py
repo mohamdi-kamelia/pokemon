@@ -1,17 +1,11 @@
-# pokedex.py
+import json
+from combat import choix
+
 class Pokedex:
-    def __init__(self):
-        self.pokemon_list = []
+    @staticmethod
+    def load_pokedex():
+        with open('pokedex.json', 'r') as file:
+            data = json.load(file)
+        return [choix(**entry) for entry in data['pokemons']]
 
-    def add_pokemon(self, pokemon):
-        if pokemon not in self.pokemon_list:
-            self.pokemon_list.append(pokemon)
-            print(f"{pokemon.name} added to the Pokedex.")
-        pass
-
-    def display_pokemon(self):
-        print("\n--- Pokedex ---")
-        for pokemon in self.pokemon_list:
-            pokemon.display_info()
-        pass
 
