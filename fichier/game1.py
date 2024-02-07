@@ -4,6 +4,7 @@ import pytmx
 import pyscroll
 from player import Player
 from combat import CombatGUI, get_random_rival, load_pokedex, select_pokemon_screen
+from pokemon import PokemonApp
 from pygame.locals import K_UP, K_DOWN, K_LEFT, K_RIGHT
 
 class Game:
@@ -136,7 +137,7 @@ class Game:
                         self.start_combat() 
                     elif return_button_rect.collidepoint(mouse_pos):
                         return  # Retour à la carte
-      
+    
 
             self.screen.fill((129, 178, 154))
             self.screen.blit(button_text, button_rect)
@@ -199,6 +200,6 @@ class Game:
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_BACKSPACE:    
                     #if event.key == pygame.K_ESCAPE:
-                        return  # Retour à la page de menu        
+                        return     
             clock.tick(60)        
         pygame.quit()
