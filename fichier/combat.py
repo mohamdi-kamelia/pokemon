@@ -53,8 +53,14 @@ class CombatGUI:
         text_surface = font.render(text, True, color)
         self.game_display.blit(text_surface, (x, y))
 
+    def draw_message(self, message):
+        font = pygame.font.SysFont(None, 24)
+        text_surface = font.render(message, True, white)
+        self.game_display.blit(text_surface, (300, 300))
+
     def start_battle_gui(self):
-        print("Un combat commence!")
+        self.draw_message("Un combat commence!")  # Afficher le message de début de combat
+        pygame.display.update()
         clock = pygame.time.Clock()
         player_turn = True  # Détermine si c'est le tour du joueur
 
@@ -131,7 +137,7 @@ class CombatGUI:
             self.player_pokemon.pokedex.append(self.player_pokemon)
             print(f"{self.player_pokemon.nom} ajouté au Pokédex!")
 
-class Pokemon(pygame.sprite.Sprite):
+class choix(pygame.sprite.Sprite):
     def __init__(self, nom, points_de_vie, niveau, puissance_attaque, defense, types, x, y):
         pygame.sprite.Sprite.__init__(self)
         self.nom = nom
@@ -179,7 +185,7 @@ def load_pokedex():
     with open('pokedex.json', 'r') as file:
         data = json.load(file)
 
-    return [Pokemon(**entry) for entry in data['pokemons']]
+    return [choix(**entry) for entry in data['pokemons']]
 
 def main():
     pygame.init()
