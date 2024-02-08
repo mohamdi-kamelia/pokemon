@@ -69,9 +69,7 @@ class CombatGUI:
         text_surface = font.render(message, True, white)
         self.game_display.blit(text_surface, (300, 300))
 
-<<<<<<< HEAD
-    # Méthode pour démarrer l'interface graphique du combat
-=======
+
     def draw_buttons(self):
         # Dessine les boutons sur l'écran
         button_font = pygame.font.SysFont(None, 20)
@@ -113,7 +111,7 @@ class CombatGUI:
             pygame.quit()
             quit()
 
->>>>>>> f182c2f863433b8eb59cc497238baa8b70c90344
+
     def start_battle_gui(self):
         self.draw_message("Un combat commence!")  # Afficher le message de début de combat
         pygame.display.update()
@@ -127,12 +125,12 @@ class CombatGUI:
                 player_damage = self.calculate_damage(self.player_pokemon, self.rival_pokemon)
                 self.apply_damage(self.rival_pokemon, player_damage)
                 self.draw_text(f"{self.player_pokemon.nom} inflige {player_damage} dégâts à {self.rival_pokemon.nom}", 10, 10)
-                time.sleep(1)  # Pause pour que le joueur puisse voir les dégâts infligés
+                time.sleep(2)  # Pause pour que le joueur puisse voir les dégâts infligés
             else:
                 rival_damage = self.calculate_damage(self.rival_pokemon, self.player_pokemon)
                 self.apply_damage(self.player_pokemon, rival_damage)
                 self.draw_text(f"{self.rival_pokemon.nom} inflige {rival_damage} dégâts à {self.player_pokemon.nom}", 10, 30)
-                time.sleep(1)  # Pause pour que le joueur puisse voir les dégâts infligés
+                time.sleep(2)  # Pause pour que le joueur puisse voir les dégâts infligés
 
             self.draw_battle_screen()
             self.draw_buttons()  # Dessiner les boutons
