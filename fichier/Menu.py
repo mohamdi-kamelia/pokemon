@@ -59,9 +59,6 @@ def main_menu():
         SCREEN.blit(BG, (0, 0))
         resized_bg = pygame.transform.scale(BG, (1000, 700))
 
-        # Centrer l'image redimensionnée
-        #bg_rect = resized_bg.get_rect(center=(SCREEN.get_width() // 2, SCREEN.get_height() // 2))
-        #SCREEN.blit(resized_bg, bg_rect)
         SCREEN.fill((0, 0, 0))  # Efface l'écran
         resized_bg = pygame.transform.scale(BG.convert_alpha(), (SCREEN.get_width(), SCREEN.get_height()))
         SCREEN.blit(resized_bg, (0, 0))

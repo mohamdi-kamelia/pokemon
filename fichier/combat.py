@@ -10,6 +10,9 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 
 base_url = 'https://pokeapi.co/api/v2'
+pygame.mixer.init()
+pygame.mixer.music.load('photos/PKMN_Surfing.mid')  
+pygame.mixer.music.play(-1) 
 
 class Type:
     def __init__(self, type_name):
@@ -51,6 +54,7 @@ class CombatGUI:
         self.draw_pokemon(self.rival_pokemon, 500, 200)  
         self.draw_health_bar(self.rival_pokemon, 500, 180)  
         self.draw_health_text(self.rival_pokemon, 500, 160)  # Affichage des PV du rival
+        self.draw_buttons()  
         pygame.display.update()
 
     # Méthode pour dessiner du texte sur l'écran de combat
@@ -65,7 +69,51 @@ class CombatGUI:
         text_surface = font.render(message, True, white)
         self.game_display.blit(text_surface, (300, 300))
 
+<<<<<<< HEAD
     # Méthode pour démarrer l'interface graphique du combat
+=======
+    def draw_buttons(self):
+        # Dessine les boutons sur l'écran
+        button_font = pygame.font.SysFont(None, 20)
+        
+        # Bouton d'attaque
+        pygame.draw.rect(self.game_display,  (225, 225, 255), [50, 500, 100, 50])
+        attack_text = button_font.render("Attaquer", True, black)
+        self.game_display.blit(attack_text, (65, 515))
+        
+        # Bouton de potion
+        pygame.draw.rect(self.game_display,  (225, 225, 255), [200, 500, 100, 50])
+        potion_text = button_font.render("Potion", True, black)
+        self.game_display.blit(potion_text, (225, 515))
+        
+        # Bouton de fuite
+        pygame.draw.rect(self.game_display, (225, 225, 255), [350, 500, 100, 50])
+        flee_text = button_font.render("Fuir", True, black)
+        self.game_display.blit(flee_text, (380, 515))
+
+    def handle_button_click(self, mouse_pos):
+        # Gère les clics de souris sur les boutons
+        x, y = mouse_pos
+
+        # Vérifie si le clic de souris est sur un bouton
+        if 50 <= x <= 150 and 500 <= y <= 550:  # Bouton Attaquer
+            player_damage = self.calculate_damage(self.player_pokemon, self.rival_pokemon)
+            self.apply_damage(self.rival_pokemon, player_damage)
+            self.draw_text(f"{self.player_pokemon.nom} inflige {player_damage} dégâts à {self.rival_pokemon.nom}", 10, 10)
+        elif 200 <= x <= 300 and 500 <= y <= 550:  # Bouton Potion
+            if self.player_pokemon.num_potions > 0:
+                # Augmente les points de vie du joueur et réduit le nombre de potions
+                self.player_pokemon.points_de_vie += 20  # Par exemple, augmente de 20 points de vie
+                self.player_pokemon.num_potions -= 1  # Réduit le nombre de potions
+                self.draw_text("Vous avez utilisé une potion!", 10, 50)
+            else:
+                self.draw_text("Vous n'avez plus de potions!", 10, 50)
+        elif 350 <= x <= 450 and 500 <= y <= 550:  # Bouton Fuir
+            self.draw_text("Vous avez fui le combat!", 10, 50)
+            pygame.quit()
+            quit()
+
+>>>>>>> f182c2f863433b8eb59cc497238baa8b70c90344
     def start_battle_gui(self):
         self.draw_message("Un combat commence!")  # Afficher le message de début de combat
         pygame.display.update()
@@ -87,13 +135,21 @@ class CombatGUI:
                 time.sleep(1)  # Pause pour que le joueur puisse voir les dégâts infligés
 
             self.draw_battle_screen()
+            self.draw_buttons()  # Dessiner les boutons
+
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    mouse_pos = pygame.mouse.get_pos()
+                    self.handle_button_click(mouse_pos)
 
             if self.player_pokemon.points_de_vie <= 0 or self.rival_pokemon.points_de_vie <= 0:
                 winner = self.determine_winner()
                 self.draw_text(f"{winner} a gagné le combat!", 10, 50)
                 self.record_in_pokedex()
-                pygame.quit()
-                quit()
+                pygame.display.update()  # Met à jour l'affichage pour afficher le vainqueur
+                time.sleep(2)  # Attend 2 secondes avant de fermer la fenêtre
+                pygame.quit()  # Ferme la fenêtre de jeu
+                quit()  # Quitte le programme
 
             player_turn = not player_turn  # Passage au tour suivant
             clock.tick(1)
@@ -251,3 +307,4 @@ def select_pokemon_screen(game, pokemons, K):
 
 if __name__ == "__main__":
     main()
+
