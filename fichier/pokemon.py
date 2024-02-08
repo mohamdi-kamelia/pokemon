@@ -19,7 +19,7 @@ class PokemonApp:
         self.selected_pokemon_info = None
 
         # Configuration de la fenêtre Pygame
-        self.screen = pygame.display.set_mode((1000, 800))
+        self.screen = pygame.display.set_mode((900, 750))
         pygame.display.set_caption("Liste des Pokémon")
         self.clock = pygame.time.Clock()
 

@@ -10,7 +10,7 @@ from pygame.locals import K_UP, K_DOWN, K_LEFT, K_RIGHT
 class Game:
     def __init__(self):
         # creer la fenetre du jeu 
-        self.screen = pygame.display.set_mode((1000, 800))
+        self.screen = pygame.display.set_mode((900, 750))
         pygame.display.set_caption('Pokemon')
         # Attribut pour suivre la carte actuelle ('world' ou 'house')
         self.map = 'world'
@@ -121,10 +121,10 @@ class Game:
         # Afficher un bouton pour démarrer le combat
         button_font = pygame.font.Font("photos/Pokemon Solid.ttf", 45)
         button_text = button_font.render("Start Combat", True, (255, 215, 0))
-        button_rect = button_text.get_rect(center=(500, 400))
+        button_rect = button_text.get_rect(center=(450, 375))
         button_font = pygame.font.Font("photos/Pokemon Solid.ttf", 45)
         return_button_text = button_font.render("Return to Map", True, (255, 215, 0))
-        return_button_rect = return_button_text.get_rect(center=(500, 500))
+        return_button_rect = return_button_text.get_rect(center=(450, 475))
 
         while True:
             for event in pygame.event.get():

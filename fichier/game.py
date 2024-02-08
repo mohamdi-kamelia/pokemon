@@ -7,8 +7,8 @@ from combat import *
 
 pygame.init()
 
-game_width = 1000
-game_height = 800
+game_width = 900
+game_height = 750
 size = (game_width, game_height)
 game = pygame.display.set_mode(size)
 pygame.display.set_caption("Pokemon")

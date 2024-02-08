@@ -7,7 +7,7 @@ from pokemon import PokemonApp
 
 
 pygame.init()
-SCREEN = pygame.display.set_mode((1000, 800))
+SCREEN = pygame.display.set_mode((900, 750))
 pygame.display.set_caption("Menu")
 
 BG = pygame.image.load("photos/_005551e8-0912-4606-bc6e-c497483f9886.jpg")
@@ -57,7 +57,7 @@ def Pokédex():
 def main_menu():
     while True:
         SCREEN.blit(BG, (0, 0))
-        resized_bg = pygame.transform.scale(BG, (1000, 700))
+        resized_bg = pygame.transform.scale(BG, (900, 750))
 
         SCREEN.fill((0, 0, 0))  # Efface l'écran
         resized_bg = pygame.transform.scale(BG.convert_alpha(), (SCREEN.get_width(), SCREEN.get_height()))
@@ -66,12 +66,12 @@ def main_menu():
  
         MENU_MOUSE_POS = pygame.mouse.get_pos()
         MENU_TEXT = get_font(80).render("  POKEMON  ", True, "#FFD700")
-        MENU_RECT = MENU_TEXT.get_rect(center=(500, 60))
+        MENU_RECT = MENU_TEXT.get_rect(center=(450, 60))
 
-        PLAY_BUTTON = Button(pos=(480, 490), text_input="Lancer une partie", font=get_font(45), base_color="#000000", hovering_color="White")
-        POKEMON_BUTTON = Button(pos=(480, 560), text_input="Voir les  Pokémons ", font=get_font(45), base_color="#000000", hovering_color="White")
-        POKEDEX_BUTTON = Button(pos=(490, 650), text_input="Accéder au Pokédex ", font=get_font(45), base_color="#000000", hovering_color="White")
-        QUIT_BUTTON = Button(pos=(480, 740), text_input="QUIT", font=get_font(60), base_color="#000000", hovering_color="White")
+        PLAY_BUTTON = Button(pos=(450, 500), text_input="Lancer une partie", font=get_font(45), base_color="#000000", hovering_color="White")
+        POKEMON_BUTTON = Button(pos=(450, 550), text_input="Voir les  Pokémons ", font=get_font(45), base_color="#000000", hovering_color="White")
+        POKEDEX_BUTTON = Button(pos=(460, 610), text_input="Accéder au Pokédex ", font=get_font(45), base_color="#000000", hovering_color="White")
+        QUIT_BUTTON = Button(pos=(450, 690), text_input="QUIT", font=get_font(60), base_color="#000000", hovering_color="White")
 
 
         SCREEN.blit(MENU_TEXT, MENU_RECT)

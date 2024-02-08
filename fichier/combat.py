@@ -68,10 +68,6 @@ class CombatGUI:
         font = pygame.font.SysFont(None, 24)
         text_surface = font.render(message, True, white)
         self.game_display.blit(text_surface, (300, 300))
-
-<<<<<<< HEAD
-    # Méthode pour démarrer l'interface graphique du combat
-=======
     def draw_buttons(self):
         # Dessine les boutons sur l'écran
         button_font = pygame.font.SysFont(None, 20)
@@ -113,7 +109,6 @@ class CombatGUI:
             pygame.quit()
             quit()
 
->>>>>>> f182c2f863433b8eb59cc497238baa8b70c90344
     def start_battle_gui(self):
         self.draw_message("Un combat commence!")  # Afficher le message de début de combat
         pygame.display.update()
