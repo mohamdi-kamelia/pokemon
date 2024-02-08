@@ -16,41 +16,6 @@ pokemons = load_pokedex()
 
 def get_font(size): 
     return pygame.font.Font("photos/Pokemon Solid.ttf", size)
-def Lancer_une_partie():
-    global player_pokemon, rival_pokemon
-
-   
-    start_game()
-
-    # Réinitialiser les variables globales après le jeu
-    player_pokemon = None
-    rival_pokemon = None
-
-
-    while True:
-        PLAY_MOUSE_POS = pygame.mouse.get_pos()
-
-        SCREEN.fill("black")
-
-        PLAY_TEXT = get_font(45).render(" ", True, "White")
-        PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 260))
-        SCREEN.blit(PLAY_TEXT, PLAY_RECT)
-
-        PLAY_BACK = Button(pos=(640, 460), 
-                            text_input="BACK", font=get_font(75), base_color="White", hovering_color="Green")
-
-        PLAY_BACK.changeColor(PLAY_MOUSE_POS)
-        PLAY_BACK.update(SCREEN)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
-                    main_menu()
-
-        pygame.display.update()
 
 def Lancer_une_partie():
     game = Game()
@@ -94,17 +59,11 @@ def main_menu():
         SCREEN.blit(BG, (0, 0))
         resized_bg = pygame.transform.scale(BG, (1000, 700))
 
-        # Centrer l'image redimensionnée
-        #bg_rect = resized_bg.get_rect(center=(SCREEN.get_width() // 2, SCREEN.get_height() // 2))
-        #SCREEN.blit(resized_bg, bg_rect)
         SCREEN.fill((0, 0, 0))  # Efface l'écran
         resized_bg = pygame.transform.scale(BG.convert_alpha(), (SCREEN.get_width(), SCREEN.get_height()))
         SCREEN.blit(resized_bg, (0, 0))
 
  
-
-
-
         MENU_MOUSE_POS = pygame.mouse.get_pos()
         MENU_TEXT = get_font(80).render("  POKEMON  ", True, "#FFD700")
         MENU_RECT = MENU_TEXT.get_rect(center=(500, 60))
