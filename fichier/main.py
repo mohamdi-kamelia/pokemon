@@ -10,7 +10,7 @@ BLANC = (255, 255, 255)
 NOIR = (0, 0, 0)
 
 # Définissez la taille de la fenêtre
-largeur, hauteur = 800, 600
+largeur, hauteur = 1000, 800
 fenetre = pygame.display.set_mode((largeur, hauteur))
 pygame.display.set_caption("Pokémon Combat")
 

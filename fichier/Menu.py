@@ -16,41 +16,6 @@ pokemons = load_pokedex()
 
 def get_font(size): 
     return pygame.font.Font("photos/Pokemon Solid.ttf", size)
-def Lancer_une_partie():
-    global player_pokemon, rival_pokemon
-
-   
-    start_game()
-
-    # Réinitialiser les variables globales après le jeu
-    player_pokemon = None
-    rival_pokemon = None
-
-
-    while True:
-        PLAY_MOUSE_POS = pygame.mouse.get_pos()
-
-        SCREEN.fill("black")
-
-        PLAY_TEXT = get_font(45).render(" ", True, "White")
-        PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 260))
-        SCREEN.blit(PLAY_TEXT, PLAY_RECT)
-
-        PLAY_BACK = Button(pos=(640, 460), 
-                            text_input="BACK", font=get_font(75), base_color="White", hovering_color="Green")
-
-        PLAY_BACK.changeColor(PLAY_MOUSE_POS)
-        PLAY_BACK.update(SCREEN)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
-                    main_menu()
-
-        pygame.display.update()
 
 def Lancer_une_partie():
     game = Game()

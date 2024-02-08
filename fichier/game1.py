@@ -6,15 +6,15 @@ from player import Player
 from combat import CombatGUI, get_random_rival, load_pokedex, select_pokemon_screen
 from pokemon import PokemonApp
 from pygame.locals import K_UP, K_DOWN, K_LEFT, K_RIGHT
-
+# Classe principale représentant le jeu Pokémon
 class Game:
     def __init__(self):
         # creer la fenetre du jeu 
         self.screen = pygame.display.set_mode((1000, 800))
         pygame.display.set_caption('Pokemon')
-
+        # Attribut pour suivre la carte actuelle ('world' ou 'house')
         self.map = 'world'
-        # charger la carte ( tmx )
+        # Chargement de la carte TMX
         tmx_data = pytmx.util_pygame.load_pygame('Map/carte.tmx')
         map_data = pyscroll.data.TiledMapData(tmx_data)
         map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
@@ -23,16 +23,16 @@ class Game:
         # generer un joueur
         player_position = tmx_data.get_object_by_name("player")
         self.player = Player(player_position.x, player_position.y)
-
+        # Initialisation de la liste des rectangles de collision
         # definir une liste qui va stocker les rectangle
         self.walls = []
-
+        # Recherche des objets de collision dans la carte TMX
         for obj in tmx_data.objects:
             if obj.type == "collision":
                 self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
 
 
-        # dessiner le groupe de calques
+        # dessiner le groupe de calques avec le joueur
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=6)
         self.group.add(self.player)
 
@@ -58,17 +58,17 @@ class Game:
             self.player.move_right()
             self.player.change_animation('right') 
                
-
+    # Méthode pour changer de carte vers l'intérieur de la maison
     def switch_house(self):
 
-        # charger la carte (tmx)
+        # charger la carte (tmx) de la maison
         tmx_data = pytmx.util_pygame.load_pygame("Map/house.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
         map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
         map_layer.zoom = 1
 
 
-        # definir une liste qui va stocker les rectangle
+        # Réinitialisation de la liste des rectangles de collision
         self.walls = []
 
         for obj in tmx_data.objects:
@@ -147,7 +147,7 @@ class Game:
     def start_combat(self):
 
         pokemons = load_pokedex()
-        pokemon_joueur = select_pokemon_screen(self.screen, pokemons, (255, 255, 255))
+        pokemon_joueur = select_pokemon_screen(self.screen, pokemons, (129, 178, 154))
         pokemon_rival = get_random_rival(pokemons, pokemon_joueur)
 
         combat = CombatGUI(pokemon_joueur, pokemon_rival)
