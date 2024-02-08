@@ -69,7 +69,6 @@ class CombatGUI:
         text_surface = font.render(message, True, white)
         self.game_display.blit(text_surface, (300, 300))
 
-
     def draw_buttons(self):
         # Dessine les boutons sur l'écran
         button_font = pygame.font.SysFont(None, 20)
@@ -110,7 +109,6 @@ class CombatGUI:
             self.draw_text("Vous avez fui le combat!", 10, 50)
             pygame.quit()
             quit()
-
 
     def start_battle_gui(self):
         self.draw_message("Un combat commence!")  # Afficher le message de début de combat

@@ -1,4 +1,4 @@
-import pygame
+"""import pygame
 import sys
 from combat import Combat
 
@@ -58,3 +58,4 @@ while True:
 
 # Quittez Pygame
 pygame.quit()
+"""
