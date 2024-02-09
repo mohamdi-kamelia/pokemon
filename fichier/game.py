@@ -8,74 +8,80 @@ from combat import *
 pygame.init()
 
 game_width = 900
-game_height = 700
+game_height = 750
 size = (game_width, game_height)
 game = pygame.display.set_mode(size)
 pygame.display.set_caption("Pokemon")
 
 black = (0, 0, 0)
 K = (129, 178, 154)
-
+# URL de base pour les requêtes API Pokémon
 base_url = 'https://pokeapi.co/api/v2'
 
 class Type:
     def __init__(self, type_name):
         self.type_name = type_name
-
+# Liste des types de Pokémon
 TYPES = [Type("Normal"), Type("Feu"), Type("Eau"), Type("Terre"), Type("Electric")]
-
+# Classe pour représenter un Pokémon
 class Pokemon(pygame.sprite.Sprite):
     def __init__(self, nom, points_de_vie, niveau, puissance_attaque, defense, types, x, y):
         pygame.sprite.Sprite.__init__(self)
         
+        # Attributs du Pokémon
         self.nom = nom
         self.points_de_vie = points_de_vie
         self.puissance_attaque = puissance_attaque
         self.defense = defense
         self.type = [Type(type_name) for type_name in types]
 
+        # Requête API pour obtenir les données du Pokémon
         req = requests.get(f"{base_url}/pokemon/{self.nom.lower()}")
         self.json = req.json()
-
+        
+        # Autres attributs du Pokémon
         self.niveau = niveau
         self.x = x
         self.y = y
         self.num_potions = 3
 
+        # Calcul des statistiques de santé basées sur le niveau du Pokémon
         stats = self.json['stats']
         for stat in stats:
             if stat['stat']['name'] == 'hp':
                 self.current_hp = stat['base_stat'] + self.niveau
                 self.max_hp = stat['base_stat'] + self.niveau
-
+        # Obtention des types du Pokémon
         self.type = []
         for pokemon_type in self.json['types']:
             type_name = pokemon_type['type']['name']
             self.type.append(type_name)
-
+        # Taille du sprite du Pokémon
         self.size = 150
+        # Chargement du sprite du Pokémon
         self.set_sprite('front_default') 
-
+    # Méthode pour charger le sprite du Pokémon
     def set_sprite(self, side):
         image = self.json['sprites'][side]
         image_stream = urlopen(image).read()
         image_file = io.BytesIO(image_stream)
         self.image = pygame.image.load(image_file).convert_alpha()
-
+        
+        # Redimensionnement du sprite du Pokémon
         scale = self.size / self.image.get_width()
         new_width = self.image.get_width() * scale
         new_height = self.image.get_height() * scale
         self.image = pygame.transform.scale(self.image, (int(new_width), int(new_height)))
-
+    # Méthode pour dessiner le sprite du Pokémon
     def draw(self, alpha=255):
         sprite = self.image.copy()
         transparency = (255, 255, 255, alpha)
         sprite.fill(transparency, None, pygame.BLEND_RGBA_MULT)
         game.blit(sprite, (self.x, self.y))
-
+    # Méthode pour obtenir le rectangle englobant du sprite du Pokémon
     def get_rect(self):
         return pygame.Rect(self.x, self.y, self.image.get_width(), self.image.get_height())
-
+# Fonction pour l'écran de sélection des Pokémon
 def select_pokemon_screen():
     global player_pokemon, rival_pokemon
 
