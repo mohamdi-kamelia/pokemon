@@ -26,14 +26,19 @@ class PokemonApp:
         # Initialisation de la zone de texte et du bouton de recherche
         self.input_text = ''
         self.active = False
-        self.text_input_rect = pygame.Rect(50, 550, 200, 50)
-        self.search_button_rect = pygame.Rect(260, 550, 100, 50)
-        self.search_button_color = (0, 255, 0)
+        self.text_input_rect = pygame.Rect(550, 50, 200, 50)
+        self.search_button_rect = pygame.Rect(760, 50, 100, 50)
+        self.search_button_color = (0, 0, 255)
 
     def load_pokemon_data(self):
         with open('pokemon.json', 'r') as file:
             pokemon_data = json.load(file)
         return pokemon_data['pokemon_list']
+
+    def save_pokemon_data(self):
+        pokemon_data = {"pokemon_list": self.pokemon_list}
+        with open('pokemon.json', 'w') as file:
+            json.dump(pokemon_data, file)
 
     def handle_events(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -59,7 +64,7 @@ class PokemonApp:
                 return
 
     def draw_text_input(self):
-        pygame.draw.rect(self.screen, (255, 255, 255), self.text_input_rect, 2)
+        pygame.draw.rect(self.screen, (0, 0, 255), self.text_input_rect, 2)
         font = pygame.font.Font(None, 36)
         text = font.render(self.input_text, True, (255, 255, 255))
         self.screen.blit(text, (self.text_input_rect.x + 5, self.text_input_rect.y + 5))
@@ -67,7 +72,7 @@ class PokemonApp:
     def draw_search_button(self):
         pygame.draw.rect(self.screen, self.search_button_color, self.search_button_rect)
         font = pygame.font.Font(None, 36)
-        text = font.render("Search", True, (255, 255, 255))
+        text = font.render("Ajouter", True, (0, 0, 0))
         self.screen.blit(text, (self.search_button_rect.x + 10, self.search_button_rect.y + 10))
 
     def search_pokemon(self):
@@ -101,6 +106,7 @@ class PokemonApp:
         pokemon_info['image_path'] = image_save_path
 
         self.pokemon_list.append(pokemon_info)
+        self.save_pokemon_data()  # Enregistrer les données dans le fichier pokemon.json
 
         print(f"Le Pokémon {pokemon_info['name']} a été ajouté avec succès !")
 
