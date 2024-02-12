@@ -28,6 +28,7 @@ def Pokemon():
 
 
 def Pokédex():
+    
     while True:
         POKEDEX_MOUSE_POS = pygame.mouse.get_pos()
 
@@ -52,8 +53,7 @@ def Pokédex():
                     main_menu()
 
         pygame.display.update()
-
-
+    
 def main_menu():
     while True:
         SCREEN.blit(BG, (0, 0))
@@ -98,4 +98,4 @@ def main_menu():
         pygame.display.update()
 
 if __name__ == "__main__":
-    main_menu()  
+    main_menu() 

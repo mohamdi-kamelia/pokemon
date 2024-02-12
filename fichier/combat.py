@@ -251,6 +251,25 @@ def load_pokedex():
 
     return [choix(**entry) for entry in data['pokemons']]
 
+class Pokedex:
+    def __init__(self, json_file_path):
+        self.pokedex_data = self.load_pokedex_data(json_file_path)
+
+    def load_pokedex_data(self, json_file_path):
+        with open(json_file_path, 'r') as file:
+            data = json.load(file)
+        return data
+
+    def get_pokemon_list(self):
+        return self.pokedex_data['pokemons']
+
+    def add_pokemon(self, pokemon_name):
+        self.pokedex_data['pokemons'].append(pokemon_name)
+
+    def save_pokedex_data(self, json_file_path):
+        with open(json_file_path, 'w') as file:
+            json.dump(self.pokedex_data, file, indent=4)
+
 def main():
     pygame.init()
 
