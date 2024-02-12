@@ -7,6 +7,7 @@ from pokemon import PokemonApp
 from combat import load_pokedex
 
 
+
 pygame.init()
 SCREEN = pygame.display.set_mode((900, 750))
 pygame.display.set_caption("Menu")

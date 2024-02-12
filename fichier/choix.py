@@ -10,7 +10,7 @@ class Type:
         self.type_name = type_name
 
 class choix(pygame.sprite.Sprite):
-    def __init__(self, nom, points_de_vie, niveau, puissance_attaque, defense, types, x, y):
+    def __init__(self,nom, points_de_vie, niveau, puissance_attaque, defense, types, x, y):
         pygame.sprite.Sprite.__init__(self)
         self.nom = nom
         self.points_de_vie = points_de_vie
