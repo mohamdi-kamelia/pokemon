@@ -1,7 +1,7 @@
 import pygame
 import sys
 from button import Button
-#from game import *
+from pokedex import Pokedex
 from game1 import Game
 from pokemon import PokemonApp
 from combat import load_pokedex
@@ -30,30 +30,10 @@ def Pokemon():
 
 
 def Pokédex():
-    while True:
-        POKEDEX_MOUSE_POS = pygame.mouse.get_pos()
+    
+    pokedex = Pokedex()  # Créer une instance de la classe Pokedex
+    pokedex.run()
 
-        SCREEN.fill("white")
-
-        POKEDEX_TEXT = get_font(45).render(" ", True, "Black")
-        POKEDEX_RECT = POKEDEX_TEXT.get_rect(center=(640, 260))
-        SCREEN.blit(POKEDEX_TEXT, POKEDEX_RECT)
-
-        POKEDEX_BACK = Button(pos=(640, 460), 
-                            text_input="BACK", font=get_font(75), base_color="Black", hovering_color="Green")
-
-        POKEDEX_BACK.changeColor(POKEDEX_MOUSE_POS)
-        POKEDEX_BACK.update(SCREEN)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if POKEDEX_BACK.checkForInput(POKEDEX_MOUSE_POS):
-                    main_menu()
-
-        pygame.display.update()
 
 
 def main_menu():

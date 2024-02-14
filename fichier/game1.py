@@ -143,7 +143,7 @@ class Game:
             self.screen.blit(button_text, button_rect)
             self.screen.blit(return_button_text, return_button_rect)
             pygame.display.flip()
-        
+     
     def start_combat(self):
 
         pokemons = load_pokedex()

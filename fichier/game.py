@@ -1,3 +1,4 @@
+"""
 import pygame
 from pygame.locals import QUIT
 import json
@@ -146,3 +147,4 @@ def start_game():
 
 if __name__ == "__main__":
     start_game()
+    """
