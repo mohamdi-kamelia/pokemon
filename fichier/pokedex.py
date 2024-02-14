@@ -324,7 +324,7 @@ def main():
 if __name__ == '__main__':
     main()
     """
-"""
+
 import pypokedex
 import PIL.Image, PIL.ImageTk
 import tkinter as tk
@@ -395,7 +395,7 @@ if __name__ == "__main__":
     btn_load.pack(padx=10, pady=10)
 
     window.mainloop()
-    """
+
 
 
 

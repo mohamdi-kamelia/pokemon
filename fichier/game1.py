@@ -2,10 +2,10 @@ import pygame
 import sys
 import pytmx
 import pyscroll
-from player import Player
-from combat import CombatGUI, get_random_rival, load_pokedex, select_pokemon_screen
 from pokemon import PokemonApp
-from pygame.locals import K_UP, K_DOWN, K_LEFT, K_RIGHT
+from player import Player # Importation de la classe Player depuis le module player.py
+from combat import CombatGUI, get_random_rival, load_pokedex, select_pokemon_screen # Importation de fonctions pour le combat depuis le module combat.py
+from pygame.locals import K_UP, K_DOWN, K_LEFT, K_RIGHT  # Importation des touches directionnelles
 # Classe principale représentant le jeu Pokémon
 class Game:
     def __init__(self):
@@ -75,15 +75,15 @@ class Game:
             if obj.type == "collision":
                 self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
 
-        # dessiner le groupe de calques
+        # dessiner le groupe de calques avec le joueur dans la maison
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=6)
         self.group.add(self.player)
 
-        # definir le rect de collision pour entrer deans la maison
+        # definir le rect de collision pour sortir deans la maison
         enter_house = tmx_data.get_object_by_name('exit_house')
         self.enter_house_rect = pygame.Rect(enter_house.x, enter_house.y, enter_house.width, enter_house.height)
 
-        # recuperer le point de spawn dans la mison
+        # recuperer du joueur dans la mison
         spawn_house_point = tmx_data.get_object_by_name('spawn_house')
         self.player.position[0] = spawn_house_point.x
         self.player.position[1] = spawn_house_point.y - 30
@@ -103,7 +103,7 @@ class Game:
             if obj.type == "collision":
                 self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
 
-        # dessiner le groupe de calques
+        # dessiner le groupe de calques avec le joueur dans le monde
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=6)
         self.group.add(self.player)
 
@@ -112,7 +112,7 @@ class Game:
         enter_house = tmx_data.get_object_by_name('enter_house')
         self.enter_house_rect = pygame.Rect(enter_house.x, enter_house.y, enter_house.width, enter_house.height)
 
-        # recuperer le point de spawn devant la mison
+        # recuperer 
         spawn_house_point = tmx_data.get_object_by_name('enter_house_exit')
         self.player.position[0] = spawn_house_point.x
         self.player.position[1] = spawn_house_point.y + 30

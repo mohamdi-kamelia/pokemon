@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import QUIT
+import json
 import requests
 import io
 from urllib.request import urlopen
@@ -15,14 +16,18 @@ pygame.display.set_caption("Pokemon")
 
 black = (0, 0, 0)
 K = (129, 178, 154)
-# URL de base pour les requêtes API Pokémon
-base_url = 'https://pokeapi.co/api/v2'
 
-class Type:
-    def __init__(self, type_name):
-        self.type_name = type_name
+# Charger les données des Pokémon depuis le fichier pokemon.json
+def load_pokemon_data():
+    with open('pokemon.json', 'r') as file:
+        pokemon_data = json.load(file)
+    return pokemon_data['pokemon_list']
+
+pokemon_list = load_pokemon_data()
+
 # Liste des types de Pokémon
 TYPES = [Type("Normal"), Type("Feu"), Type("Eau"), Type("Terre"), Type("Electric")]
+
 # Classe pour représenter un Pokémon
 class Pokemon(pygame.sprite.Sprite):
     def __init__(self, nom, points_de_vie, niveau, puissance_attaque, defense, types, x, y):
@@ -35,10 +40,18 @@ class Pokemon(pygame.sprite.Sprite):
         self.defense = defense
         self.type = [Type(type_name) for type_name in types]
 
-        # Requête API pour obtenir les données du Pokémon
-        req = requests.get(f"{base_url}/pokemon/{self.nom.lower()}")
-        self.json = req.json()
-        
+        # Recherche du Pokémon dans la liste chargée depuis pokemon.json
+        pokemon_info = next((p for p in pokemon_list if p['name'] == self.nom), None)
+        if pokemon_info:
+            self.image_url = pokemon_info['image_url']
+        else:
+            self.image_url = 'https://via.placeholder.com/150'  # URL de secours si le Pokémon n'est pas trouvé
+
+        # Obtention de l'image du Pokémon
+        image_stream = urlopen(self.image_url).read()
+        image_file = io.BytesIO(image_stream)
+        self.image = pygame.image.load(image_file).convert_alpha()
+
         # Autres attributs du Pokémon
         self.niveau = niveau
         self.x = x
@@ -46,45 +59,23 @@ class Pokemon(pygame.sprite.Sprite):
         self.num_potions = 3
 
         # Calcul des statistiques de santé basées sur le niveau du Pokémon
-        stats = self.json['stats']
-        for stat in stats:
-            if stat['stat']['name'] == 'hp':
-                self.current_hp = stat['base_stat'] + self.niveau
-                self.max_hp = stat['base_stat'] + self.niveau
-        # Obtention des types du Pokémon
-        self.type = []
-        for pokemon_type in self.json['types']:
-            type_name = pokemon_type['type']['name']
-            self.type.append(type_name)
-        # Taille du sprite du Pokémon
-        self.size = 150
-        # Chargement du sprite du Pokémon
-        self.set_sprite('front_default') 
-    # Méthode pour charger le sprite du Pokémon
-    def set_sprite(self, side):
-        image = self.json['sprites'][side]
-        image_stream = urlopen(image).read()
-        image_file = io.BytesIO(image_stream)
-        self.image = pygame.image.load(image_file).convert_alpha()
-        
-        # Redimensionnement du sprite du Pokémon
-        scale = self.size / self.image.get_width()
-        new_width = self.image.get_width() * scale
-        new_height = self.image.get_height() * scale
-        self.image = pygame.transform.scale(self.image, (int(new_width), int(new_height)))
+        self.current_hp = points_de_vie + self.niveau
+        self.max_hp = points_de_vie + self.niveau
+
     # Méthode pour dessiner le sprite du Pokémon
     def draw(self, alpha=255):
         sprite = self.image.copy()
         transparency = (255, 255, 255, alpha)
         sprite.fill(transparency, None, pygame.BLEND_RGBA_MULT)
         game.blit(sprite, (self.x, self.y))
+
     # Méthode pour obtenir le rectangle englobant du sprite du Pokémon
     def get_rect(self):
         return pygame.Rect(self.x, self.y, self.image.get_width(), self.image.get_height())
+
 # Fonction pour l'écran de sélection des Pokémon
 def select_pokemon_screen():
-    global player_pokemon, rival_pokemon
-
+    global pokemons
     selected_pokemon = None
     game_status = 'select_pokemon'
 
@@ -112,32 +103,26 @@ def select_pokemon_screen():
     return selected_pokemon
 
 # Positions x et y pour l'affichage des Pokémon
-x_bulbasaur, y_bulbasaur = 50, 50
-x_charmander, y_charmander = 200, 50
-x_squirtle, y_squirtle = 350, 50
-x_pikachu, y_pikachu = 500, 50
-x_sandshrew, y_sandshrew = 50, 250
-x_eevee, y_eevee = 200, 250
-x_gengar, y_gengar = 350, 250
-x_ivysaur, y_ivysaur = 500, 250
-x_onix, y_onix = 50, 450
-x_staryu, y_staryu = 200, 450
-x_voltorb, y_voltorb = 350, 450
-x_wartortle, y_wartortle = 500, 450
+pokemon_positions = [
+    (50, 50), (200, 50), (350, 50), (500, 50),
+    (50, 250), (200, 250), (350, 250), (500, 250),
+    (50, 450), (200, 450), (350, 450), (500, 450)
+]
 
-bulbasaur = Pokemon('Bulbasaur', 100, 30, 25, 15, ['Type1', 'Type2'], x_bulbasaur, y_bulbasaur)
-charmander = Pokemon('Charmander', 90, 30, 25, 18, ['Type1', 'Type2'], x_charmander, y_charmander)
-squirtle = Pokemon('Squirtle', 95, 30, 23, 20, ['Type1', 'Type2'], x_squirtle, y_squirtle)
-pikachu = Pokemon('Pikachu', 85, 30, 30, 15, ['Type1'], x_pikachu, y_pikachu)
-sandshrew = Pokemon('Sandshrew', 95, 30, 20, 25, ['Type1'], x_sandshrew, y_sandshrew)
-eevee = Pokemon('Eevee', 80, 30, 20, 20, ['Type1'], x_eevee, y_eevee)
-gengar = Pokemon('Gengar', 110, 35, 28, 22, ['Type1', 'Type2'], x_gengar, y_gengar)
-ivysaur = Pokemon('Ivysaur', 105, 32, 26, 17, ['Type1', 'Type2'], x_ivysaur, y_ivysaur)
-onix = Pokemon('Onix', 120, 40, 20, 30, ['Type1', 'Type2'], x_onix, y_onix)
-staryu = Pokemon('Staryu', 90, 28, 35, 15, ['Type1'], x_staryu, y_staryu)
-voltorb = Pokemon('Voltorb', 88, 30, 25, 28, ['Type1'], x_voltorb, y_voltorb)
-wartortle = Pokemon('Wartortle', 98, 35, 30, 22, ['Type1'], x_wartortle, y_wartortle)
-pokemons = [bulbasaur, charmander, squirtle, pikachu, sandshrew, eevee, gengar, ivysaur, onix, staryu, voltorb, wartortle]
+pokemons = []
+for i, pokemon_info in enumerate(pokemon_list):
+    x, y = pokemon_positions[i]
+    pokemon = Pokemon(
+        nom=pokemon_info['name'],
+        points_de_vie=pokemon_info['hp'],
+        niveau=30,  # Niveau par défaut
+        puissance_attaque=pokemon_info['attack'],
+        defense=pokemon_info['defense'],
+        types=pokemon_info['types'],
+        x=x,
+        y=y
+    )
+    pokemons.append(pokemon)
 
 def start_game():
     global player_pokemon, rival_pokemon , game_status
@@ -158,3 +143,6 @@ def start_game():
         pygame.display.flip()
 
     pygame.quit()
+
+if __name__ == "__main__":
+    start_game()
