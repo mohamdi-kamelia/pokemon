@@ -12,7 +12,7 @@ class MenuPage:
         self.clock = pygame.time.Clock()
 
         # Charger l'arrière-plan
-        self.background_image = pygame.image.load(background_image_path)
+        self.background_image = pygame.image.load("fichier/_caf418dd-8623-42c9-867c-ca4a5dc6d58a.jpg")
         self.background_rect = self.background_image.get_rect()
 
         # Redimensionner l'arrière-plan pour s'adapter à la fenêtre tout en conservant le ratio d'aspect
@@ -23,9 +23,9 @@ class MenuPage:
         self.background_rect = self.background_image.get_rect()
 
         # Charger la police
-        with zipfile.ZipFile("mecanix.zip", 'r') as zip_ref:
+        with zipfile.ZipFile("fichier\mecanix.zip", 'r') as zip_ref:
             zip_ref.extractall()
-        self.font = pygame.font.Font("Mecanix.ttf", 30)
+        self.font = pygame.font.Font("fichier\Mecanix.ttf", 30)
 
         # Options du menu
         self.menu_options = [" Lancer une Partie", "Ajouter un Pokemon", "Acceder au Pokedex", "            Quitter"]
@@ -80,4 +80,5 @@ class MenuPage:
 if __name__ == "__main__":
     menu = MenuPage(600, 650, "_caf418dd-8623-42c9-867c-ca4a5dc6d58a.jpg", "mecanix.zip")
     menu.run_menu()
+
 
