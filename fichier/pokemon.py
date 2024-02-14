@@ -6,41 +6,48 @@ from pok import PokemonDataDownloader
 
 class PokemonApp:
     def __init__(self):
-        pygame.init()
-        pygame.font.init()
+        pygame.init()  # Initialise pygame.
+        pygame.font.init()  # Initialise la bibliothèque de polices pygame.
 
+        # Initialise le téléchargeur de données PokemonDataDownloader.
         self.downloader = PokemonDataDownloader()
-        self.downloader.get_pokemon_data()
+        self.downloader.get_pokemon_data()  # Télécharge les données des Pokémon.
 
+        # Charge les données des Pokémon à partir d'un fichier JSON.
         self.pokemon_list = self.load_pokemon_data()
         self.selected_index = 0
         self.selected_pokemon_info = None
 
+        # Initialise la fenêtre pygame.
         self.screen = pygame.display.set_mode((900, 750))
-        pygame.display.set_caption("Liste des Pokémon")
-        self.clock = pygame.time.Clock()
+        pygame.display.set_caption("Liste des Pokémon")  # Définit le titre de la fenêtre.
+        self.clock = pygame.time.Clock()  # Initialise l'horloge pour le framerate.
 
+        # Charge l'image de fond et la police pour l'interface utilisateur.
         self.background_image = pygame.image.load('photos/_5b7894b6-a498-45f7-9d9b-3a664b262059.jpg')
         self.font = pygame.font.Font('photos/Pokemon Solid.ttf', 30)
 
-        # Initialisation de la zone de texte et du bouton de recherche
+        # Initialise la zone de texte et le bouton de recherche.
         self.input_text = ''
         self.active = False
-        self.text_input_rect = pygame.Rect(550, 50, 200, 50)
-        self.search_button_rect = pygame.Rect(760, 50, 100, 50)
-        self.search_button_color = (0, 0, 255)
+        self.text_input_rect = pygame.Rect(550, 50, 200, 50)  # Rectangle pour la zone de texte.
+        self.search_button_rect = pygame.Rect(760, 50, 100, 50)  # Rectangle pour le bouton de recherche.
+        self.search_button_color = (0, 0, 255)  # Couleur du bouton de recherche.
 
     def load_pokemon_data(self):
+        # Charge les données des Pokémon à partir d'un fichier JSON.
         with open('pokemon.json', 'r') as file:
             pokemon_data = json.load(file)
         return pokemon_data['pokemon_list']
 
     def save_pokemon_data(self):
+        # Enregistre les données des Pokémon dans un fichier JSON.
         pokemon_data = {"pokemon_list": self.pokemon_list}
         with open('pokemon.json', 'w') as file:
             json.dump(pokemon_data, file)
 
     def handle_events(self, event):
+        # Gère les événements pygame, tels que la souris et le clavier.
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.text_input_rect.collidepoint(event.pos):
                 self.active = True
@@ -64,18 +71,21 @@ class PokemonApp:
                 return
 
     def draw_text_input(self):
+        # Dessine la zone de texte pygame.
         pygame.draw.rect(self.screen, (0, 0, 255), self.text_input_rect, 2)
         font = pygame.font.Font(None, 36)
         text = font.render(self.input_text, True, (255, 255, 255))
         self.screen.blit(text, (self.text_input_rect.x + 5, self.text_input_rect.y + 5))
 
     def draw_search_button(self):
+        # Dessine le bouton de recherche pygame.
         pygame.draw.rect(self.screen, self.search_button_color, self.search_button_rect)
         font = pygame.font.Font(None, 36)
         text = font.render("Ajouter", True, (0, 0, 0))
         self.screen.blit(text, (self.search_button_rect.x + 10, self.search_button_rect.y + 10))
 
     def search_pokemon(self):
+        # Recherche un Pokémon en fonction de l'ID entré par l'utilisateur.
         pokemon_id = self.input_text.strip()
 
         if not 1 <= int(pokemon_id) <= 898:
@@ -106,11 +116,12 @@ class PokemonApp:
         pokemon_info['image_path'] = image_save_path
 
         self.pokemon_list.append(pokemon_info)
-        self.save_pokemon_data()  # Enregistrer les données dans le fichier pokemon.json
+        self.save_pokemon_data()  # Enregistre les données dans le fichier pokemon.json
 
         print(f"Le Pokémon {pokemon_info['name']} a été ajouté avec succès !")
 
     def load_pokemon_images(self, pokemon_list):
+        # Charge les images des Pokémon à partir de leurs chemins d'accès.
         images = {}
         for pokemon_info in pokemon_list:
             image_path = pokemon_info['image_path']
@@ -118,6 +129,7 @@ class PokemonApp:
         return images
 
     def draw_pokemon_list(self):
+        # Dessine la liste des Pokémon sur l'écran pygame.
         self.screen.blit(self.background_image, (0, 0))
 
         pokemon_images = self.load_pokemon_images(self.pokemon_list)
@@ -133,6 +145,7 @@ class PokemonApp:
             self.screen.blit(text, (50 + image.get_width() + 10, text_y))
 
     def draw_pokemon_info(self):
+        # Dessine les informations détaillées d'un Pokémon sélectionné.
         if self.selected_pokemon_info:
             font = pygame.font.Font(None, 30)
             text_x = 450
@@ -150,6 +163,7 @@ class PokemonApp:
                     text_y += 30
 
     def run(self):
+        # Boucle principale de l'application.
         while True:
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -174,12 +188,13 @@ class PokemonApp:
             self.draw_text_input()
             self.draw_search_button()
 
-            pygame.display.flip()
-            self.clock.tick(30)
+            pygame.display.flip()  # Met à jour l'affichage.
+            self.clock.tick(30)  # Limite le framerate à 30 images par seconde.
 
 if __name__ == "__main__":
     app = PokemonApp()
-    app.run()
+    app.run()  # Lance l'application.
+
 
 
 

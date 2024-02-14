@@ -146,14 +146,19 @@ class CombatGUI:
                     mouse_pos = pygame.mouse.get_pos()  # Récupération de la position du clic
                     self.handle_button_click(mouse_pos)  # Gestion du clic sur les boutons d'action
 
+            # Dans la méthode start_battle_gui, après avoir déterminé le vainqueur du combat
             if self.player_pokemon.points_de_vie <= 0 or self.rival_pokemon.points_de_vie <= 0:  # Si le Pokémon du joueur ou du rival n'a plus de points de vie
                 winner = self.determine_winner()  # Détermination du vainqueur du combat
+                if winner == self.player_pokemon.nom:  # Si le vainqueur est le Pokémon du joueur
+                    self.record_in_pokedex(self.rival_pokemon)  # Enregistrement du Pokémon rival vaincu dans le Pokédex du joueur
+                else:  # Si le vainqueur est le Pokémon rival
+                    self.record_in_pokedex(self.player_pokemon)  # Enregistrement du Pokémon du joueur vaincu dans le Pokédex du joueur
                 self.draw_text(f"{winner} a gagné le combat!", 10, 50)  # Affichage du message de victoire du vainqueur
-                self.record_in_pokedex()  # Enregistrement du Pokémon vainqueur dans le Pokédex
                 pygame.display.update()  # Mise à jour de l'affichage de la fenêtre de jeu
                 time.sleep(2)  # Pause de 2 secondes pour laisser le temps au joueur de voir le résultat du combat
                 pygame.quit()  # Fermeture de Pygame
                 quit()  # Fermeture du programme
+  # Fermeture du programme
 
             player_turn = not player_turn  # Changement de tour (du joueur au rival ou vice versa)
             clock.tick(1)  # Limitation de la vitesse du jeu à 1 image par seconde
@@ -208,10 +213,12 @@ class CombatGUI:
             return "Aucun vainqueur"  # Aucun vainqueur si les deux Pokémon ont encore des points de vie
 
     # Méthode pour enregistrer le Pokémon vainqueur dans le Pokédex
-    def record_in_pokedex(self):
-        if self.player_pokemon not in self.player_pokemon.pokedex:  # Si le Pokémon du joueur n'est pas déjà enregistré dans le Pokédex
-            self.player_pokemon.pokedex.append(self.player_pokemon)  # Ajout du Pokémon du joueur au Pokédex
-            print(f"{self.player_pokemon.nom} ajouté au Pokédex!")  # Affichage d'un message indiquant l'ajout du Pokémon au Pokédex
+    # Méthode pour enregistrer le Pokémon rival vaincu dans le Pokédex du joueur
+    def record_in_pokedex(self, defeated_pokemon):
+        if defeated_pokemon not in self.player_pokemon.pokedex:  # Si le Pokémon rival vaincu n'est pas déjà enregistré dans le Pokédex du joueur
+            self.player_pokemon.pokedex.append(defeated_pokemon)  # Ajout du Pokémon rival vaincu au Pokédex du joueur
+            print(f"{defeated_pokemon.nom} ajouté au Pokédex!")  # Affichage d'un message indiquant l'ajout du Pokémon au Pokédex du joueur
+
 
 # Fonction pour charger les données des Pokémon à partir d'un fichier JSON
 def load_pokedex():
