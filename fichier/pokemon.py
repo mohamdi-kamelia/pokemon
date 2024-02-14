@@ -162,6 +162,10 @@ class PokemonApp:
                         self.selected_index = (self.selected_index + 1) % len(self.pokemon_list)
                     elif event.key == pygame.K_UP:
                         self.selected_index = (self.selected_index - 1) % len(self.pokemon_list)
+                    elif event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_BACKSPACE:    
+                        #if event.key == pygame.K_ESCAPE:
+                            return    
 
                 self.handle_events(event)        
 
