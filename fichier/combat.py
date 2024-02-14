@@ -47,7 +47,7 @@ class CombatGUI:
 
     # Méthode pour afficher le texte de santé d'un Pokémon à une position spécifique sur l'écran
     def draw_health_text(self, pokemon, x, y):
-        font = pygame.font.SysFont(None, 24)
+        font = pygame.font.SysFont("photos/Pokemon Solid.ttf", 24)
         text_surface = font.render(f"PV: {pokemon.points_de_vie}/{pokemon.max_points_de_vie}", True, white)
         self.game_display.blit(text_surface, (x, y))
     
@@ -77,22 +77,22 @@ class CombatGUI:
 
     # Méthode pour dessiner les boutons d'action (Attaquer, Potion, Fuir)
     def draw_buttons(self):
-        button_font = pygame.font.SysFont(None, 20)  # Définition de la police de caractères pour les boutons
+        button_font = pygame.font.SysFont("Arial", 20)  # Définition de la police de caractères pour les boutons
         
         # Dessin du bouton "Attaquer"
-        pygame.draw.rect(self.game_display,  (225, 225, 255), [50, 500, 100, 50])
+        pygame.draw.rect(self.game_display,  (129, 178, 154), [75, 525, 100, 50])
         attack_text = button_font.render("Attaquer", True, black)
-        self.game_display.blit(attack_text, (65, 515))
+        self.game_display.blit(attack_text, (90, 540))
         
         # Dessin du bouton "Potion"
-        pygame.draw.rect(self.game_display,  (225, 225, 255), [200, 500, 100, 50])
+        pygame.draw.rect(self.game_display,  (129, 178, 154), [225, 525, 100, 50])
         potion_text = button_font.render("Potion", True, black)
-        self.game_display.blit(potion_text, (225, 515))
+        self.game_display.blit(potion_text, (250, 540))
         
         # Dessin du bouton "Fuir"
-        pygame.draw.rect(self.game_display, (225, 225, 255), [350, 500, 100, 50])
+        pygame.draw.rect(self.game_display, (129, 178, 154), [375, 525, 100, 50])
         flee_text = button_font.render("Fuir", True, black)
-        self.game_display.blit(flee_text, (380, 515))
+        self.game_display.blit(flee_text, (405, 540))
 
     # Méthode pour gérer les clics de souris sur les boutons d'action
     def handle_button_click(self, mouse_pos):
@@ -209,9 +209,9 @@ class CombatGUI:
 
     # Méthode pour enregistrer le Pokémon vainqueur dans le Pokédex
     def record_in_pokedex(self):
-        if self.player_pokemon not in self.player_pokemon.pokedex:  # Si le Pokémon du joueur n'est pas déjà enregistré dans le Pokédex
-            self.player_pokemon.pokedex.append(self.player_pokemon)  # Ajout du Pokémon du joueur au Pokédex
-            print(f"{self.player_pokemon.nom} ajouté au Pokédex!")  # Affichage d'un message indiquant l'ajout du Pokémon au Pokédex
+        if self.rival_pokemon not in self.player_pokemon.pokedex:  # Vérifie si le Pokémon rival n'est pas déjà enregistré dans le Pokédex
+            self.player_pokemon.pokedex.append(self.rival_pokemon)  # Ajoute le Pokémon rival au Pokédex du joueur
+            print(f"{self.rival_pokemon.nom} ajouté au Pokédex!")  # Affichage d'un message indiquant l'ajout du Pokémon au Pokédex
 
 # Fonction pour charger les données des Pokémon à partir d'un fichier JSON
 def load_pokedex():
@@ -250,5 +250,3 @@ def select_pokemon_screen(game, pokemons, K):
         pygame.display.update()  # Mise à jour de l'affichage de la fenêtre de jeu
 
     return selected_pokemon  # Retour du Pokémon sélectionné
-
-
